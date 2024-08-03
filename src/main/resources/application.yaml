@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: WorkBuddy
+  data:
+    mongodb:
+      host: ${MONGO_HOST:localhost}
+      port: ${MONGO_PORT:9401}
+      database: workBuddy
+      username: ${MONGO_ROOT_USERNAME:admin}
+      password: ${MONGO_ROOT_PASSWORD:password}
+      authentication-database: admin
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:9402}
+  cache:
+    type: redis
+    redis:
+      time-to-live: 3600s
+server:
+  port: 9400
+  servlet:
+    contextPath: /workbuddy
+logging:
+  file:
+    name: workbuddy.log

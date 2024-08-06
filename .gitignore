@@ -37,4 +37,4 @@ mongo-data/
 redis-data/
 
 ### Log ###
-workbuddy.log
+workbuddy.log*

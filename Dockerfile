@@ -12,6 +12,8 @@ ENV MONGO_HOST=localhost
 ENV MONGO_PORT=9401
 ENV REDIS_HOST=localhost
 ENV REDIS_PORT=9402
+ENV MONGO_ROOT_USERNAME=admin
+ENV MONGO_ROOT_PASSWORD=password
 
 # Run a script file to wait
 RUN chmod +x wait-and-start.sh

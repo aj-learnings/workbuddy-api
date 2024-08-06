@@ -1,0 +1,274 @@
+{
+	"info": {
+		"_postman_id": "35840442-ad1b-4765-9024-b1b7a9af2930",
+		"name": "WorkBuddy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37268856"
+	},
+	"item": [
+		{
+			"name": "WorkItem",
+			"item": [
+				{
+					"name": "Create WorkItem",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Testing title\",\r\n    \"description\": \"Testing description\",\r\n    \"type\": \"GENERAL\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/workitem",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"workitem"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All WorkItems",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/workitem",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"workitem"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single WorkItem",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/workitem/id/:id",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"workitem",
+								"id",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66a8e8ef36889d06322e1a8d"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update WorkItem",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Testing title update\",\r\n    \"description\": \"Testing description update\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/workitem/id/:id",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"workitem",
+								"id",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66a8e8ef36889d06322e1a8d"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete WorkItem",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/workitem/id/:id",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"workitem",
+								"id",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "66a8e8ef36889d06322e1a8d"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Comment",
+			"item": [
+				{
+					"name": "Create Comment",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"text\": \"Testing text 2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/workitems/:workItemId/comment",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"workitems",
+								":workItemId",
+								"comment"
+							],
+							"variable": [
+								{
+									"key": "workItemId",
+									"value": "66a8e8ef36889d06322e1a8d"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Comment",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"text\": \"Testing text 1 update\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/workitems/:workItemId/comment/id/:id",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"workitems",
+								":workItemId",
+								"comment",
+								"id",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "workItemId",
+									"value": "66a8e8ef36889d06322e1a8d"
+								},
+								{
+									"key": "id",
+									"value": "66a8e93b36889d06322e1a8e"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Comment",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/workitems/:workItemId/comment/id/:id",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"workitems",
+								":workItemId",
+								"comment",
+								"id",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "workItemId",
+									"value": "66a8e8ef36889d06322e1a8d"
+								},
+								{
+									"key": "id",
+									"value": "66a8ec05163eb86367826d3a"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Health",
+			"item": [
+				{
+					"name": "Health check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/health",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"health"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

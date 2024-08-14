@@ -9,9 +9,9 @@ COPY wait-and-start.sh wait-and-start.sh
 
 # Set environment variables for MongoDB and Redis
 ENV MONGO_HOST=localhost
-ENV MONGO_PORT=9401
+ENV MONGO_PORT=27017
 ENV REDIS_HOST=localhost
-ENV REDIS_PORT=9402
+ENV REDIS_PORT=6379
 ENV MONGO_ROOT_USERNAME=admin
 ENV MONGO_ROOT_PASSWORD=password
 

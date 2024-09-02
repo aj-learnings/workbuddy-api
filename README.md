@@ -49,6 +49,7 @@ You need [Java](https://www.java.com/en/download/help/download_options.html) and
       java -jar "target/workbuddy-api-0.0.1-SNAPSHOT.jar"
       ```
 
+4. **The application will be available at http://localhost:9401/api/workbuddy**
 ## Documentation
 
 The [postman collection and environment](https://github.com/aj-learnings/workbuddy-api/tree/master/postman) is present in the repository. You can import that in [Postman](https://www.postman.com/downloads/).

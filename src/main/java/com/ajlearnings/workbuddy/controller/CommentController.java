@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/workitems/{workItemId}/comment")
+@RequestMapping("/workitem/id/{workItemId}/comment")
 @Validated
 public class CommentController {
 
@@ -27,6 +27,12 @@ public class CommentController {
     public ResponseEntity<CommentResponse> addComment(@PathVariable("workItemId") @ValidObjectId String workItemId, @Valid @RequestBody CreateCommentRequest createCommentRequest) {
         var addedComment = commentService.addComment(new ObjectId(workItemId), createCommentRequest);
         return new ResponseEntity<>(addedComment, HttpStatus.CREATED);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<CommentResponse>> getAllCommentsPerWorkItem(@PathVariable("workItemId") @ValidObjectId String workItemId) {
+        var comments = commentService.getAllCommentsPerWorkItem(new ObjectId(workItemId));
+        return new ResponseEntity<>(comments, HttpStatus.OK);
     }
 
     @PutMapping("/id/{id}")

@@ -31,22 +31,22 @@ public class WorkItemService implements IWorkItemService {
     @CacheEvict(key = "'all'")
     public WorkItemResponse addWorkItem(CreateWorkItemRequest createWorkItemRequest) {
         var addedWorkItem = workItemStore.add(WorkItemTranslator.ToEntity(createWorkItemRequest));
-        return WorkItemTranslator.ToResponse(addedWorkItem, null);
+        return WorkItemTranslator.ToResponse(addedWorkItem);
     }
 
     @Override
     @Cacheable(key = "'all'")
     public List<WorkItemResponse> getAllWorkItem() {
         var workItems = workItemStore.getAll();
-        return workItems.stream().map(workItem -> WorkItemTranslator.ToResponse(workItem, null)).toList();
+        workItems.sort((workItem1, workItem2) -> workItem2.getUpdatedAt().compareTo(workItem1.getUpdatedAt()));
+        return workItems.stream().map(WorkItemTranslator::ToResponse).toList();
     }
 
     @Override
     @Cacheable(key = "#workItemId")
     public WorkItemResponse getSingleWorkItem(ObjectId workItemId) {
         var workItem = workItemStore.get(workItemId);
-        var comments = commentService.getAllCommentsPerWorkItem(workItemId);
-        return WorkItemTranslator.ToResponse(workItem, comments);
+        return WorkItemTranslator.ToResponse(workItem);
     }
 
     @Override
@@ -59,7 +59,7 @@ public class WorkItemService implements IWorkItemService {
         workItem.setTitle(updateWorkItem.getTitle());
         workItem.setDescription((updateWorkItem.getDescription()));
         var updatedWorkItem = workItemStore.update(workItem);
-        return WorkItemTranslator.ToResponse(updatedWorkItem, null);
+        return WorkItemTranslator.ToResponse(updatedWorkItem);
     }
 
     @Override

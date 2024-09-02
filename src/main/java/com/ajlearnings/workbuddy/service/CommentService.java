@@ -1,5 +1,6 @@
 package com.ajlearnings.workbuddy.service;
 
+import com.ajlearnings.workbuddy.entity.BaseEntity;
 import com.ajlearnings.workbuddy.exception.ResourceNotFoundException;
 import com.ajlearnings.workbuddy.model.request.CreateCommentRequest;
 import com.ajlearnings.workbuddy.model.request.UpdateCommentRequest;
@@ -15,6 +16,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -29,13 +31,15 @@ public class CommentService implements ICommentService {
     @Override
     @Caching(evict = {
             @CacheEvict(value = "comment", key = "#workItemId + '_all'"),
-            @CacheEvict(value = "workitem", key = "#workItemId")
+            @CacheEvict(value = "workitem", key = "#workItemId"),
+            @CacheEvict(value = "workitem", key = "'all'")
     })
     public CommentResponse addComment(ObjectId workItemId, CreateCommentRequest createCommentRequest) {
         var workItem = workItemStore.get(workItemId);
         var comment = CommentTranslator.ToEntity(createCommentRequest);
         comment.setWorkItem(workItem);
         var addedComment = commentStore.add(comment);
+        workItemStore.update(workItem);
         return CommentTranslator.ToResponse(addedComment);
     }
 
@@ -43,13 +47,15 @@ public class CommentService implements ICommentService {
     @Cacheable(value = "comment", key = "#workItemId + '_all'")
     public List<CommentResponse> getAllCommentsPerWorkItem(ObjectId workItemId) {
         var comments = commentStore.getAllPerWorkItem(workItemId);
+        comments.sort(Comparator.comparing(BaseEntity::getCreatedAt));
         return comments.stream().map(CommentTranslator::ToResponse).toList();
     }
 
     @Override
     @Caching(evict = {
             @CacheEvict(value = "comment", key = "#workItemId + '_all'"),
-            @CacheEvict(value = "workitem", key = "#workItemId")
+            @CacheEvict(value = "workitem", key = "#workItemId"),
+            @CacheEvict(value = "workitem", key = "'all'")
     })
     public CommentResponse updateComment(ObjectId workItemId, ObjectId commentId, UpdateCommentRequest updateCommentRequest) {
         var workItem = workItemStore.get(workItemId);
@@ -59,13 +65,15 @@ public class CommentService implements ICommentService {
         }
         comment.setText(updateCommentRequest.getText());
         var updatedComment = commentStore.update(comment);
+        workItemStore.update(workItem);
         return CommentTranslator.ToResponse(updatedComment);
     }
 
     @Override
     @Caching(evict = {
             @CacheEvict(value = "comment", key = "#workItemId + '_all'"),
-            @CacheEvict(value = "workitem", key = "#workItemId")
+            @CacheEvict(value = "workitem", key = "#workItemId"),
+            @CacheEvict(value = "workitem", key = "'all'")
     })
     public boolean deleteComment(ObjectId workItemId, ObjectId commentId) {
         var workItem = workItemStore.get(workItemId);
@@ -74,6 +82,7 @@ public class CommentService implements ICommentService {
             throw new ResourceNotFoundException("Comment does not exist in given workitem.");
         }
         commentStore.delete(commentId);
+        workItemStore.update(workItem);
         return true;
     }
 

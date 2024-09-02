@@ -70,7 +70,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "66a8e8ef36889d06322e1a8d"
+									"value": "66adf46428ef077d36bc83aa"
 								}
 							]
 						}
@@ -84,7 +84,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"title\": \"Testing title update\",\r\n    \"description\": \"Testing description update\"\r\n}",
+							"raw": "{\r\n    \"title\": \"Testing 2\",\r\n    \"description\": \"Description 2\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -104,7 +104,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "66a8e8ef36889d06322e1a8d"
+									"value": "66d22f6455e3c97625876ecc"
 								}
 							]
 						}
@@ -156,12 +156,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{BaseURL}}/workitems/:workItemId/comment",
+							"raw": "{{BaseURL}}/workitem/id/:workItemId/comment",
 							"host": [
 								"{{BaseURL}}"
 							],
 							"path": [
-								"workitems",
+								"workitem",
+								"id",
 								":workItemId",
 								"comment"
 							],
@@ -190,12 +191,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{BaseURL}}/workitems/:workItemId/comment/id/:id",
+							"raw": "{{BaseURL}}/workitem/id/:workItemId/comment/id/:id",
 							"host": [
 								"{{BaseURL}}"
 							],
 							"path": [
-								"workitems",
+								"workitem",
+								"id",
 								":workItemId",
 								"comment",
 								"id",
@@ -221,12 +223,13 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{BaseURL}}/workitems/:workItemId/comment/id/:id",
+							"raw": "{{BaseURL}}/workitem/id/:workItemId/comment/id/:id",
 							"host": [
 								"{{BaseURL}}"
 							],
 							"path": [
-								"workitems",
+								"workitem",
+								"id",
 								":workItemId",
 								"comment",
 								"id",
@@ -240,6 +243,32 @@
 								{
 									"key": "id",
 									"value": "66a8ec05163eb86367826d3a"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get comments per Workitem",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/workitem/id/:workItemId/comment",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"workitem",
+								"id",
+								":workItemId",
+								"comment"
+							],
+							"variable": [
+								{
+									"key": "workItemId",
+									"value": ""
 								}
 							]
 						}

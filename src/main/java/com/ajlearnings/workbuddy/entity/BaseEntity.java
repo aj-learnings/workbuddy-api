@@ -8,7 +8,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -18,7 +18,7 @@ public class BaseEntity {
     @Id
     private ObjectId id;
     @CreatedDate
-    private LocalDateTime createdAt;
+    private Date createdAt;
     @LastModifiedDate
-    private LocalDateTime updatedAt;
+    private Date updatedAt;
 }

@@ -17,9 +17,9 @@ spring:
     redis:
       time-to-live: 3600s
 server:
-  port: 9400
+  port: 9401
   servlet:
-    contextPath: /workbuddy
+    contextPath: /api/workbuddy
 logging:
   file:
     name: workbuddy.log

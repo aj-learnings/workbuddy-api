@@ -1,4 +1,4 @@
-# worbuddy-app
+# Worbuddy Application
 Here, we have the API's of a workbuddy app.
 
 With the help of this app, you can add/delete/update an workitem and also add comments to it.
@@ -50,6 +50,14 @@ You need [Java](https://www.java.com/en/download/help/download_options.html) and
       ```
 
 4. **The application will be available at http://localhost:9401/api/workbuddy**
+
+## Docker image
+This code is also deployed as a docker image. Use the below command to run it as a container
+```bash
+docker run -d -p <your-port>:9401 --name workbuddy-api ajlearnings/workbuddy-api:v1
+```
+Check [here](https://hub.docker.com/r/ajlearnings/workbuddy-api) for the environment variables.
+
 ## Documentation
 
 The [postman collection and environment](https://github.com/aj-learnings/workbuddy-api/tree/master/postman) is present in the repository. You can import that in [Postman](https://www.postman.com/downloads/).

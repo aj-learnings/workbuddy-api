@@ -3,15 +3,13 @@ spring:
     name: WorkBuddy
   data:
     mongodb:
-      host: ${MONGO_HOST:localhost}
-      port: ${MONGO_PORT:27017}
+      uri: ${MONGO_URI:mongodb://localhost:27017}
       database: workBuddy
-      username: ${MONGO_ROOT_USERNAME:admin}
-      password: ${MONGO_ROOT_PASSWORD:password}
-      authentication-database: admin
+      auto-index-creation: true
     redis:
       host: ${REDIS_HOST:localhost}
       port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
   cache:
     type: redis
     redis:

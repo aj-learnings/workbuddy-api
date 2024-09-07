@@ -4,7 +4,6 @@ import com.ajlearnings.workbuddy.entity.Comment;
 import com.ajlearnings.workbuddy.exception.ResourceNotFoundException;
 import com.ajlearnings.workbuddy.repository.ICommentRepository;
 import org.bson.types.ObjectId;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,8 +11,11 @@ import java.util.List;
 @Service
 public class CommentStore implements ICommentStore {
 
-    @Autowired
-    private ICommentRepository commentRepository;
+    private final ICommentRepository commentRepository;
+
+    public CommentStore(ICommentRepository commentRepository) {
+        this.commentRepository = commentRepository;
+    }
 
     @Override
     public Comment add(Comment comment) {

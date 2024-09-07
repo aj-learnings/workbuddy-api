@@ -7,7 +7,6 @@ import com.ajlearnings.workbuddy.model.response.CommentResponse;
 import com.ajlearnings.workbuddy.service.ICommentService;
 import jakarta.validation.Valid;
 import org.bson.types.ObjectId;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -20,8 +19,11 @@ import java.util.List;
 @Validated
 public class CommentController {
 
-    @Autowired
-    private ICommentService commentService;
+    private final ICommentService commentService;
+
+    public CommentController(ICommentService commentService) {
+        this.commentService = commentService;
+    }
 
     @PostMapping
     public ResponseEntity<CommentResponse> addComment(@PathVariable("workItemId") @ValidObjectId String workItemId, @Valid @RequestBody CreateCommentRequest createCommentRequest) {

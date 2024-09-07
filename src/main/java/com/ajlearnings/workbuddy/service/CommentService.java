@@ -10,7 +10,6 @@ import com.ajlearnings.workbuddy.store.IWorkItemStore;
 import com.ajlearnings.workbuddy.translator.CommentTranslator;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
@@ -23,10 +22,13 @@ import java.util.List;
 @Slf4j
 public class CommentService implements ICommentService {
 
-    @Autowired
-    private IWorkItemStore workItemStore;
-    @Autowired
-    private ICommentStore commentStore;
+    private final IWorkItemStore workItemStore;
+    private final ICommentStore commentStore;
+
+    public CommentService(IWorkItemStore workItemStore, ICommentStore commentStore) {
+        this.workItemStore = workItemStore;
+        this.commentStore = commentStore;
+    }
 
     @Override
     @Caching(evict = {

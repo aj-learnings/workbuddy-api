@@ -3,12 +3,9 @@ package com.ajlearnings.workbuddy.service;
 import com.ajlearnings.workbuddy.model.request.CreateWorkItemRequest;
 import com.ajlearnings.workbuddy.model.request.UpdateWorkItemRequest;
 import com.ajlearnings.workbuddy.model.response.WorkItemResponse;
-import com.ajlearnings.workbuddy.store.ICommentStore;
 import com.ajlearnings.workbuddy.store.IWorkItemStore;
-import com.ajlearnings.workbuddy.translator.CommentTranslator;
 import com.ajlearnings.workbuddy.translator.WorkItemTranslator;
 import org.bson.types.ObjectId;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -21,11 +18,13 @@ import java.util.List;
 @CacheConfig(cacheNames = "workitem")
 public class WorkItemService implements IWorkItemService {
 
-    @Autowired
-    private IWorkItemStore workItemStore;
+    private final IWorkItemStore workItemStore;
+    private final ICommentService commentService;
 
-    @Autowired
-    private ICommentService commentService;
+    public WorkItemService(IWorkItemStore workItemStore, ICommentService commentService) {
+        this.workItemStore = workItemStore;
+        this.commentService = commentService;
+    }
 
     @Override
     @CacheEvict(key = "'all'")

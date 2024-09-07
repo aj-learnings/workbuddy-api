@@ -7,7 +7,6 @@ import com.ajlearnings.workbuddy.model.response.WorkItemResponse;
 import com.ajlearnings.workbuddy.service.IWorkItemService;
 import jakarta.validation.Valid;
 import org.bson.types.ObjectId;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -20,8 +19,11 @@ import java.util.List;
 @Validated
 public class WorkItemController {
 
-    @Autowired
-    private IWorkItemService workItemService;
+    private final IWorkItemService workItemService;
+
+    public WorkItemController(IWorkItemService workItemService) {
+        this.workItemService = workItemService;
+    }
 
     @PostMapping
     public ResponseEntity<WorkItemResponse> addWorkItem(@Valid @RequestBody CreateWorkItemRequest createWorkItemRequest) {

@@ -4,7 +4,6 @@ import com.ajlearnings.workbuddy.entity.WorkItem;
 import com.ajlearnings.workbuddy.exception.ResourceNotFoundException;
 import com.ajlearnings.workbuddy.repository.IWorkItemRepository;
 import org.bson.types.ObjectId;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,8 +11,11 @@ import java.util.List;
 @Service
 public class WorkItemStore implements IWorkItemStore {
 
-    @Autowired
-    private IWorkItemRepository workItemRepository;
+    private final IWorkItemRepository workItemRepository;
+
+    public WorkItemStore(IWorkItemRepository workItemRepository) {
+        this.workItemRepository = workItemRepository;
+    }
 
     @Override
     public WorkItem add(WorkItem workItem) {

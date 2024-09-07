@@ -1,22 +1,28 @@
 # [Worbuddy Application](https://www.youtube.com/watch?v=0F-E_kD6Spw)
 
-Here, we have the API's of a workbuddy app.
+Here, we have the APIs of a workbuddy app.
 
-With the help of this app, you can add/delete/update an workitem and also add comments to it.
+With the help of this app, you can add/delete/update a workitem and also add comments to it.
 
 <br>
 
-Below are the steps to run these api's in a virtual-machine or local-system.
+Below are the steps to run these apis in a virtual-machine or local-system.
 ## Running Guide
 
 ### Prerequisites
 
-You need [Java](https://www.java.com/en/download/help/download_options.html) and any one of the below installed:
-- [MongoDB](https://www.mongodb.com/docs/manual/administration/install-community/) and [Redis](https://redis.io/docs/latest/operate/oss_and_stack/install/install-redis/)
+Before running the project, ensure you have the following prerequisites set up:
 
-   **OR**
+1. [Java](https://www.java.com/en/download/help/download_options.html)
+2. [MongoDB Server](https://www.mongodb.com/try/download/community) and [Redis](https://redis.io/docs/latest/operate/oss_and_stack/install/install-redis/)
+   
+   You can set up MongoDB and Redis in one of the following ways:
+   
+   a.  Local Installation - Download and install both MongoDB and Redis on your system.
 
-- [Docker](https://www.docker.com/products/docker-desktop/)
+   b. [Docker](https://www.docker.com/products/docker-desktop/)
+
+   c. Managed Db - You can opt to use cloud-based [MongoDB](https://www.mongodb.com/products/platform/atlas-database) and [Redis](https://app.redislabs.com/) services.
 
 ### Steps :
 
@@ -29,11 +35,15 @@ You need [Java](https://www.java.com/en/download/help/download_options.html) and
    cd workbuddy-api
    ```
    
-2. **Install mongodb and redis with docker** (You can skip this step if these services are already present)
+2. **Install mongodb and redis with docker** (This step is needed when you don't have mongo and redis in your system and neither you are using managed dbs)
 
    ```bash
    docker-compose up -d
    ```
+   Note:
+   
+   If you are not using docker, then you need to update the mongodb and redis details in the [properties](https://github.com/aj-learnings/workbuddy-api/blob/master/src/main/resources/application.yaml) file.
+
    
 3. **Run the application**
 
@@ -41,7 +51,7 @@ You need [Java](https://www.java.com/en/download/help/download_options.html) and
    
    1. Open the project in that IDE.
    2. Navigate to the main file [WorkBuddyApplication.java](https://github.com/aj-learnings/workbuddy-api/blob/master/src/main/java/com/ajlearnings/workbuddy/WorkBuddyApplication.java)
-   3. Right click on the file and click the **Run** button.
+   3. Right-click on the file and click the **Run** button.
 
    b. If you wish to run the application without an IDE i.e., from command line, execute the following commands :
    

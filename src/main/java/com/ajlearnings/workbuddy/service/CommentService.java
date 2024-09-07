@@ -46,6 +46,7 @@ public class CommentService implements ICommentService {
     @Override
     @Cacheable(value = "comment", key = "#workItemId + '_all'")
     public List<CommentResponse> getAllCommentsPerWorkItem(ObjectId workItemId) {
+        var workItem = workItemStore.get(workItemId);
         var comments = commentStore.getAllPerWorkItem(workItemId);
         comments.sort(Comparator.comparing(BaseEntity::getCreatedAt));
         return comments.stream().map(CommentTranslator::ToResponse).toList();

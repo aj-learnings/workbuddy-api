@@ -21,3 +21,7 @@ server:
 logging:
   file:
     name: workbuddy.log
+security:
+  jwt:
+    secret-key: d27af2af4564fd3835df7b07655190e8850464de8b3c46ec0e49aafa4c562f7d
+    expiration-time: 3600000

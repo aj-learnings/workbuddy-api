@@ -6,6 +6,7 @@ import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -59,6 +60,25 @@ public class CustomExceptionHandler {
                                         .timestamp(LocalDateTime.now())
                                         .build();
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<?> handleBadCredentialsException(Exception exception, HttpServletRequest request) {
+        var guid = UUID.randomUUID().toString();
+        log.error(
+                String.format("Error GUID=%s; error message: %s", guid, exception.getMessage()),
+                exception
+        );
+        var errorResponse = ErrorResponse.builder()
+                                            .guid(guid)
+                                            .message(exception.getMessage())
+                                            .statusCode(HttpStatus.UNAUTHORIZED.value())
+                                            .statusName(HttpStatus.UNAUTHORIZED.name())
+                                            .path(request.getRequestURI())
+                                            .method(request.getMethod())
+                                            .timestamp(LocalDateTime.now())
+                                            .build();
+        return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler(Exception.class)

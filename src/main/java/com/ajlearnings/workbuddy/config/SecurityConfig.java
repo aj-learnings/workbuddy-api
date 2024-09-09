@@ -3,6 +3,7 @@ package com.ajlearnings.workbuddy.config;
 import com.ajlearnings.workbuddy.filters.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -27,7 +28,8 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.authorizeHttpRequests(request -> request
-                        .requestMatchers("/", "/health", "/login" , "/signup", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                        .requestMatchers("/login" , "/signup").permitAll()
+                        .requestMatchers(HttpMethod.GET).permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)

@@ -16,14 +16,17 @@ public class UserStore implements IUserStore {
     }
 
     @Override
+    public User add(User user) {
+        return userRepository.save(user);
+    }
+
+    @Override
     public Optional<User> getByUserName(String userName) {
         return userRepository.findByUserName(userName);
     }
 
     @Override
-    public User add(User user) {
-        return userRepository.save(user);
+    public Optional<User> getByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
-
-
 }

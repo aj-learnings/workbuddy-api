@@ -7,6 +7,7 @@ import java.util.Optional;
 
 @Service
 public interface IUserStore {
-    Optional<User> getByUserName(String userName);
     User add(User user);
+    Optional<User> getByUserName(String userName);
+    Optional<User> getByEmail(String email);
 }

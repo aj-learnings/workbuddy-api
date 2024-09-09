@@ -2,42 +2,43 @@ package com.ajlearnings.workbuddy.service;
 
 import com.ajlearnings.workbuddy.entity.User;
 import com.ajlearnings.workbuddy.model.request.CreateUserRequest;
-import com.ajlearnings.workbuddy.model.request.LoginRequest;
+import com.ajlearnings.workbuddy.model.response.UserResponse;
 import com.ajlearnings.workbuddy.store.IUserStore;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import com.ajlearnings.workbuddy.translator.UserTranslator;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
+@CacheConfig(cacheNames = "user")
+@Slf4j
 public class UserService implements IUserService {
 
     private final IUserStore userStore;
-    private final PasswordEncoder passwordEncoder;
-    private final AuthenticationManager authenticationManager;
+    private static final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-    public UserService(IUserStore userStore, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager) {
+    public UserService(IUserStore userStore) {
         this.userStore = userStore;
-        this.passwordEncoder = passwordEncoder;
-        this.authenticationManager = authenticationManager;
     }
 
     @Override
-    public User addUser(CreateUserRequest createUserRequest) {
-        var user = User.builder()
-                        .userName(createUserRequest.getUserName())
-                        .password(passwordEncoder.encode(createUserRequest.getPassword()))
-                        .email(createUserRequest.getEmail())
-                        .build();
-
-        return userStore.add(user);
+    public UserResponse addUser(CreateUserRequest createUserRequest) {
+        var newUser = UserTranslator.ToEntity(createUserRequest);
+        newUser.setPassword(passwordEncoder.encode(createUserRequest.getPassword()));
+        var createdUser = userStore.add(newUser);
+        return UserTranslator.ToResponse(createdUser);
     }
 
     @Override
-    public User authenticateUser(LoginRequest loginRequest) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getUserName(),
-                                                        loginRequest.getPassword()));
-        return userStore.getByUserName(loginRequest.getUserName()).orElseThrow();
+    @Cacheable(key = "#userNameorEmail")
+    public User getUserByUserNameorEmail(String userNameorEmail) {
+        var optionalUser = userStore.getByUserName(userNameorEmail);
+        if (optionalUser.isEmpty()) {
+            optionalUser = userStore.getByEmail(userNameorEmail);
+        }
+        return optionalUser.orElse(null);
     }
 }

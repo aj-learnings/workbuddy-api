@@ -1,6 +1,6 @@
 package com.ajlearnings.workbuddy.config;
 
-import com.ajlearnings.workbuddy.store.IUserStore;
+import com.ajlearnings.workbuddy.service.IUserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,21 +14,21 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Configuration
 public class AppConfig {
 
-    private final IUserStore userStore;
+    private final IUserService userService;
 
-    public AppConfig(IUserStore userStore) {
-        this.userStore = userStore;
+    public AppConfig(IUserService userService) {
+        this.userService = userService;
     }
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return username -> userStore.getByUserName(username)
-                                    .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-    }
-
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        return username -> {
+            var user = userService.getUserByUserNameorEmail(username);
+            if (user == null) {
+                throw new UsernameNotFoundException("User not found");
+            }
+            return user;
+        };
     }
 
     @Bean
@@ -40,7 +40,7 @@ public class AppConfig {
     public AuthenticationProvider authenticationProvider() {
         var authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(userDetailsService());
-        authProvider.setPasswordEncoder(passwordEncoder());
+        authProvider.setPasswordEncoder(new BCryptPasswordEncoder());
         return authProvider;
     }
 }

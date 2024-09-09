@@ -5,6 +5,7 @@ import com.ajlearnings.workbuddy.model.request.UpdateWorkItemRequest;
 import com.ajlearnings.workbuddy.model.response.WorkItemResponse;
 import com.ajlearnings.workbuddy.store.IWorkItemStore;
 import com.ajlearnings.workbuddy.translator.WorkItemTranslator;
+import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
@@ -16,6 +17,7 @@ import java.util.List;
 
 @Service
 @CacheConfig(cacheNames = "workitem")
+@Slf4j
 public class WorkItemService implements IWorkItemService {
 
     private final IWorkItemStore workItemStore;

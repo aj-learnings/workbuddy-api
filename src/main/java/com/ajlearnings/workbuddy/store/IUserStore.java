@@ -9,5 +9,5 @@ import java.util.Optional;
 public interface IUserStore {
     User add(User user);
     Optional<User> getByUserName(String userName);
-    Optional<User> getByEmail(String email);
+    boolean existsByUserName(String userName);
 }

@@ -25,7 +25,7 @@ public class AuthenticationService implements IAuthenticationService {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUserName(),
                         loginRequest.getPassword()));
-        var authenticatedUser = userService.getUserByUserNameorEmail(loginRequest.getUserName());
+        var authenticatedUser = userService.getUserByUserName(loginRequest.getUserName());
         String jwtToken = jwtService.generateToken(authenticatedUser);
         return LoginResponse.builder().token(jwtToken).build();
     }

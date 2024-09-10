@@ -10,5 +10,4 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class UserResponse implements Serializable {
     private String userName;
-    private String email;
 }

@@ -23,7 +23,7 @@ public class AppConfig {
     @Bean
     public UserDetailsService userDetailsService() {
         return username -> {
-            var user = userService.getUserByUserNameorEmail(username);
+            var user = userService.getUserByUserName(username);
             if (user == null) {
                 throw new UsernameNotFoundException("User not found");
             }

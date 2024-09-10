@@ -8,7 +8,6 @@ public class UserTranslator {
     public static User ToEntity(CreateUserRequest createUserRequest) {
         return User.builder()
                     .userName(createUserRequest.getUserName())
-                    .email(createUserRequest.getEmail())
                     .password(createUserRequest.getPassword())
                     .build();
     }
@@ -16,7 +15,6 @@ public class UserTranslator {
     public static UserResponse ToResponse(User user) {
         return UserResponse.builder()
                             .userName(user.getUsername())
-                            .email(user.getEmail())
                             .build();
     }
 }

@@ -9,5 +9,5 @@ import org.springframework.stereotype.Service;
 public interface IUserService {
 
     UserResponse addUser(CreateUserRequest createUserRequest);
-    User getUserByUserNameorEmail(String userNameorEmail);
+    User getUserByUserName(String userName);
 }

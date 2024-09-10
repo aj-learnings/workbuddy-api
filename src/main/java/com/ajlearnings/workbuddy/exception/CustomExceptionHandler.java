@@ -44,7 +44,7 @@ public class CustomExceptionHandler {
     }
 
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<?> handleApplicationException(ResourceNotFoundException exception, HttpServletRequest request) {
+    public ResponseEntity<?> handleResourceNotFoundException(ResourceNotFoundException exception, HttpServletRequest request) {
         var guid = UUID.randomUUID().toString();
         log.error(
                 String.format("Error GUID=%s; error message: %s", guid, exception.getMessage()),
@@ -60,6 +60,25 @@ public class CustomExceptionHandler {
                                         .timestamp(LocalDateTime.now())
                                         .build();
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(UserAlreadyExistException.class)
+    public ResponseEntity<?> handleUserAlreadyExistException(UserAlreadyExistException exception, HttpServletRequest request) {
+        var guid = UUID.randomUUID().toString();
+        log.error(
+                String.format("Error GUID=%s; error message: %s", guid, exception.getMessage()),
+                exception
+        );
+        var errorResponse = ErrorResponse.builder()
+                .guid(guid)
+                .message(exception.getMessage())
+                .statusCode(HttpStatus.CONFLICT.value())
+                .statusName(HttpStatus.CONFLICT.name())
+                .path(request.getRequestURI())
+                .method(request.getMethod())
+                .timestamp(LocalDateTime.now())
+                .build();
+        return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(BadCredentialsException.class)

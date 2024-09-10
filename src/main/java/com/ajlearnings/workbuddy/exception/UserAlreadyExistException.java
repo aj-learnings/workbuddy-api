@@ -1,0 +1,8 @@
+package com.ajlearnings.workbuddy.exception;
+
+public class UserAlreadyExistException extends RuntimeException {
+
+    public UserAlreadyExistException(String message) {
+        super(message);
+    }
+}

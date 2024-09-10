@@ -26,7 +26,7 @@ public class UserStore implements IUserStore {
     }
 
     @Override
-    public Optional<User> getByEmail(String email) {
-        return userRepository.findByEmail(email);
+    public boolean existsByUserName(String userName) {
+        return userRepository.existsByUserName(userName);
     }
 }

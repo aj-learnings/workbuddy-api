@@ -1,6 +1,7 @@
 package com.ajlearnings.workbuddy.entity;
 
 import lombok.*;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,9 +17,8 @@ import java.util.List;
 @AllArgsConstructor
 public class User extends BaseEntity implements UserDetails {
     @NonNull
+    @Indexed(unique = true)
     private String userName;
-    @NonNull
-    private String email;
     @NonNull
     private String password;
 

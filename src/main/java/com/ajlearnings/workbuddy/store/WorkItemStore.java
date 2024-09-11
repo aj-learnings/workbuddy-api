@@ -35,7 +35,7 @@ public class WorkItemStore implements IWorkItemStore {
     @Cacheable(key = "#workItemId")
     public WorkItem get(ObjectId workItemId) {
         return workItemRepository.findById(workItemId)
-                                 .orElseThrow(() -> new ResourceNotFoundException("Work item not found with id : " + workItemId.toString()));
+                                 .orElseThrow(() -> new ResourceNotFoundException("Work item not found with id : " + workItemId));
     }
 
     @Override

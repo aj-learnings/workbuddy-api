@@ -20,6 +20,7 @@ public class CommentTranslator {
                                 .id(comment.getId().toString())
                                 .created(comment.getCreatedAt())
                                 .updated(comment.getUpdatedAt())
+                                .createdBy(comment.getUser().getUsername())
                                 .build();
     }
 }

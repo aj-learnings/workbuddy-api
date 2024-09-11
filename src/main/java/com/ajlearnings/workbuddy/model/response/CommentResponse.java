@@ -15,4 +15,5 @@ public class CommentResponse {
     private String text;
     private Date created;
     private Date updated;
+    private String createdBy;
 }

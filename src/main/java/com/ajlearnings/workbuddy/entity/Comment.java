@@ -20,4 +20,6 @@ public class Comment extends BaseEntity implements Serializable {
     private String text;
     @DBRef
     private WorkItem workItem;
+    @DBRef
+    private User user;
 }

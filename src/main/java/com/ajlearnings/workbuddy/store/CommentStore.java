@@ -34,7 +34,7 @@ public class CommentStore implements ICommentStore {
     @Override
     public Comment get(ObjectId commentId) {
         return commentRepository.findById(commentId)
-                                .orElseThrow(() -> new ResourceNotFoundException("Comment not found with id : " + commentId.toString()));
+                                .orElseThrow(() -> new ResourceNotFoundException("Comment not found with id : " + commentId));
     }
 
     @Override

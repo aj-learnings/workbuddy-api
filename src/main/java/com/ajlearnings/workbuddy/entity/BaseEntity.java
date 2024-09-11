@@ -8,13 +8,13 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class BaseEntity {
-
+public class BaseEntity implements Serializable {
     @Id
     private ObjectId id;
     @CreatedDate

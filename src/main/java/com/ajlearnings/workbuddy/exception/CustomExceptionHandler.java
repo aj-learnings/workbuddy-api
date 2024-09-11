@@ -6,6 +6,7 @@ import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -98,6 +99,25 @@ public class CustomExceptionHandler {
                                             .timestamp(LocalDateTime.now())
                                             .build();
         return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<?> handleAccessDeniedException(Exception exception, HttpServletRequest request) {
+        var guid = UUID.randomUUID().toString();
+        log.error(
+                String.format("Error GUID=%s; error message: %s", guid, exception.getMessage()),
+                exception
+        );
+        var errorResponse = ErrorResponse.builder()
+                .guid(guid)
+                .message(exception.getMessage())
+                .statusCode(HttpStatus.FORBIDDEN.value())
+                .statusName(HttpStatus.FORBIDDEN.name())
+                .path(request.getRequestURI())
+                .method(request.getMethod())
+                .timestamp(LocalDateTime.now())
+                .build();
+        return new ResponseEntity<>(errorResponse, HttpStatus.FORBIDDEN);
     }
 
     @ExceptionHandler(Exception.class)

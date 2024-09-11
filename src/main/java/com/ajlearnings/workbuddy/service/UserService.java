@@ -7,15 +7,12 @@ import com.ajlearnings.workbuddy.model.response.UserResponse;
 import com.ajlearnings.workbuddy.store.IUserStore;
 import com.ajlearnings.workbuddy.translator.UserTranslator;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-@CacheConfig(cacheNames = "user")
 @Slf4j
 public class UserService implements IUserService {
 
@@ -42,7 +39,6 @@ public class UserService implements IUserService {
     }
 
     @Override
-    @Cacheable(key = "#userName")
     public User getUserByUserName(String userName) {
         var optionalUser = userStore.getByUserName(userName);
         return optionalUser.orElse(null);

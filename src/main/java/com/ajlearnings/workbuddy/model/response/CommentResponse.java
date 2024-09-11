@@ -9,7 +9,7 @@ import java.util.Date;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CommentResponse implements Serializable {
+public class CommentResponse {
     private String id;
     private String type;
     private String text;

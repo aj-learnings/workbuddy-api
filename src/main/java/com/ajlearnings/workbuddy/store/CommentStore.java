@@ -4,11 +4,14 @@ import com.ajlearnings.workbuddy.entity.Comment;
 import com.ajlearnings.workbuddy.exception.ResourceNotFoundException;
 import com.ajlearnings.workbuddy.repository.ICommentRepository;
 import org.bson.types.ObjectId;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@CacheConfig(cacheNames = "comment")
 public class CommentStore implements ICommentStore {
 
     private final ICommentRepository commentRepository;
@@ -23,6 +26,7 @@ public class CommentStore implements ICommentStore {
     }
 
     @Override
+    @Cacheable(key = "#workItemId + '_all'")
     public List<Comment> getAllPerWorkItem(ObjectId workItemId) {
         return commentRepository.findAllByWorkItem(workItemId);
     }

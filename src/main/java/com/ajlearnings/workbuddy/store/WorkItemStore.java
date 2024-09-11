@@ -4,11 +4,14 @@ import com.ajlearnings.workbuddy.entity.WorkItem;
 import com.ajlearnings.workbuddy.exception.ResourceNotFoundException;
 import com.ajlearnings.workbuddy.repository.IWorkItemRepository;
 import org.bson.types.ObjectId;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@CacheConfig(cacheNames = "workitem")
 public class WorkItemStore implements IWorkItemStore {
 
     private final IWorkItemRepository workItemRepository;
@@ -23,11 +26,13 @@ public class WorkItemStore implements IWorkItemStore {
     }
 
     @Override
+    @Cacheable(key = "'all'")
     public List<WorkItem> getAll() {
         return workItemRepository.findAll();
     }
 
     @Override
+    @Cacheable(key = "#workItemId")
     public WorkItem get(ObjectId workItemId) {
         return workItemRepository.findById(workItemId)
                                  .orElseThrow(() -> new ResourceNotFoundException("Work item not found with id : " + workItemId.toString()));

@@ -23,6 +23,7 @@ public class WorkItemTranslator {
                                 .description(workItem.getDescription())
                                 .created(workItem.getCreatedAt())
                                 .updated(workItem.getUpdatedAt())
+                                .createdBy(workItem.getUser().getUsername())
                                 .build();
     }
 }

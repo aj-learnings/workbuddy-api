@@ -40,8 +40,7 @@ public class UserService implements IUserService {
 
     @Override
     public User getUserByUserName(String userName) {
-        var optionalUser = userStore.getByUserName(userName);
-        return optionalUser.orElse(null);
+        return userStore.getByUserName(userName);
     }
 
     private boolean existsByUserName(String userName) {

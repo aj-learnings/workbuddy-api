@@ -4,9 +4,8 @@ import com.ajlearnings.workbuddy.entity.User;
 import com.ajlearnings.workbuddy.repository.IUserRepository;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 @CacheConfig(cacheNames = "user")
@@ -25,8 +24,9 @@ public class UserStore implements IUserStore {
 
     @Override
     @Cacheable(key = "#userName")
-    public Optional<User> getByUserName(String userName) {
-        return userRepository.findByUserName(userName);
+    public User getByUserName(String userName) {
+        return userRepository.findByUserName(userName)
+                             .orElseThrow(() -> new UsernameNotFoundException("User not found with username : " + userName));
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.ajlearnings.workbuddy.model.request;
 
-import com.ajlearnings.workbuddy.annotation.ValidObjectId;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -10,5 +9,6 @@ import lombok.*;
 @AllArgsConstructor
 public class UpdateCommentRequest {
     @NotBlank(message = "Comment cannot be empty")
+    @NotNull
     private String text;
 }

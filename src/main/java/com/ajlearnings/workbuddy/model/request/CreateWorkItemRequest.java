@@ -11,9 +11,10 @@ import lombok.*;
 @AllArgsConstructor
 public class CreateWorkItemRequest {
     @NotBlank(message = "Title cannot be blank")
+    @NotNull(message = "Title cannot be null")
     private String title;
     private String description;
-    @NotNull(message = "Work item cannot be blank")
+    @NotNull(message = "Type cannot be null")
     @ValidEnum(enumClass = WorkItemType.class)
     private String type;
 }

@@ -37,7 +37,7 @@ public class WorkItemService implements IWorkItemService {
     public WorkItemResponse addWorkItem(CreateWorkItemRequest createWorkItemRequest) {
         var authentication = SecurityContextHolder.getContext().getAuthentication();
         var userName = authentication.getName();
-        var user = userStore.getByUserName(userName).get();
+        var user = userStore.getByUserName(userName);
         var workItem = WorkItemTranslator.ToEntity(createWorkItemRequest);
         workItem.setUser(user);
         var addedWorkItem = workItemStore.add(workItem);
@@ -65,7 +65,7 @@ public class WorkItemService implements IWorkItemService {
     public WorkItemResponse updateWorkItem(ObjectId workItemId, UpdateWorkItemRequest updateWorkItem) {
         var authentication = SecurityContextHolder.getContext().getAuthentication();
         var userName = authentication.getName();
-        var user = userStore.getByUserName(userName).get();
+        var user = userStore.getByUserName(userName);
         var workItem = workItemStore.get(workItemId);
         if (!workItem.getUser().getUsername().equals(user.getUsername())) {
             throw new AccessDeniedException("You do not have permission to update this work item");
@@ -84,7 +84,7 @@ public class WorkItemService implements IWorkItemService {
     public boolean deleteWorkItem(ObjectId workItemId) {
         var authentication = SecurityContextHolder.getContext().getAuthentication();
         var userName = authentication.getName();
-        var user = userStore.getByUserName(userName).get();
+        var user = userStore.getByUserName(userName);
         var workItem = workItemStore.get(workItemId);
         if (!workItem.getUser().getUsername().equals(user.getUsername())) {
             throw new AccessDeniedException("You do not have permission to delete this work item");

@@ -1,6 +1,7 @@
 package com.ajlearnings.workbuddy.exception;
 
 import com.ajlearnings.workbuddy.model.response.ErrorResponse;
+import io.jsonwebtoken.JwtException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
@@ -118,6 +119,25 @@ public class CustomExceptionHandler {
                 .timestamp(LocalDateTime.now())
                 .build();
         return new ResponseEntity<>(errorResponse, HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler(JwtException.class)
+    public ResponseEntity<?> handleJwtException(Exception exception, HttpServletRequest request) {
+        var guid = UUID.randomUUID().toString();
+        log.error(
+                String.format("Error GUID=%s; error message: %s", guid, exception.getMessage()),
+                exception
+        );
+        var errorResponse = ErrorResponse.builder()
+                .guid(guid)
+                .message("Invalid jwt token")
+                .statusCode(HttpStatus.UNAUTHORIZED.value())
+                .statusName(HttpStatus.UNAUTHORIZED.name())
+                .path(request.getRequestURI())
+                .method(request.getMethod())
+                .timestamp(LocalDateTime.now())
+                .build();
+        return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler(Exception.class)

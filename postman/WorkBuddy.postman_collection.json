@@ -12,11 +12,21 @@
 				{
 					"name": "Create WorkItem",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"title\": \"Testing title\",\r\n    \"description\": \"Testing description\",\r\n    \"type\": \"GENERAL\"\r\n}",
+							"raw": "{\r\n    \"title\": \"Testing title 2\",\r\n    \"description\": \"Testing description 2\",\r\n    \"type\": \"GENERAL\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -38,6 +48,9 @@
 				{
 					"name": "Get All WorkItems",
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -70,7 +83,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "66adf46428ef077d36bc83aa"
+									"value": "66e2e2019da9665f164397e7"
 								}
 							]
 						}
@@ -80,11 +93,21 @@
 				{
 					"name": "Update WorkItem",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"title\": \"Testing 2\",\r\n    \"description\": \"Description 2\"\r\n}",
+							"raw": "{\r\n    \"title\": \"Testing Title 2 edited\",\r\n    \"description\": \"Testing description 2 edited\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -104,7 +127,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "66d22f6455e3c97625876ecc"
+									"value": "66e2e2569da9665f164397e8"
 								}
 							]
 						}
@@ -114,6 +137,16 @@
 				{
 					"name": "Delete WorkItem",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
@@ -129,7 +162,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "66a8e8ef36889d06322e1a8d"
+									"value": "66e2e2019da9665f164397e7"
 								}
 							]
 						}
@@ -144,6 +177,16 @@
 				{
 					"name": "Create Comment",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -169,7 +212,7 @@
 							"variable": [
 								{
 									"key": "workItemId",
-									"value": "66a8e8ef36889d06322e1a8d"
+									"value": "66e0917d0ef4af5553d498d4"
 								}
 							]
 						}
@@ -179,11 +222,21 @@
 				{
 					"name": "Update Comment",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"text\": \"Testing text 1 update\"\r\n}",
+							"raw": "{\r\n    \"text\": \"Testing text 2 edited\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -191,7 +244,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{BaseURL}}/workitem/id/:workItemId/comment/id/:id",
+							"raw": "{{BaseURL}}/workitem/id/:workItemId/comment/id/:commentId",
 							"host": [
 								"{{BaseURL}}"
 							],
@@ -201,16 +254,16 @@
 								":workItemId",
 								"comment",
 								"id",
-								":id"
+								":commentId"
 							],
 							"variable": [
 								{
 									"key": "workItemId",
-									"value": "66a8e8ef36889d06322e1a8d"
+									"value": "66e0917d0ef4af5553d498d4"
 								},
 								{
-									"key": "id",
-									"value": "66a8e93b36889d06322e1a8e"
+									"key": "commentId",
+									"value": "66e1a15dcdb7ae3e1d0b06d4"
 								}
 							]
 						}
@@ -220,10 +273,20 @@
 				{
 					"name": "Delete Comment",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{BaseURL}}/workitem/id/:workItemId/comment/id/:id",
+							"raw": "{{BaseURL}}/workitem/id/:workItemId/comment/id/:commentId",
 							"host": [
 								"{{BaseURL}}"
 							],
@@ -233,16 +296,16 @@
 								":workItemId",
 								"comment",
 								"id",
-								":id"
+								":commentId"
 							],
 							"variable": [
 								{
 									"key": "workItemId",
-									"value": "66a8e8ef36889d06322e1a8d"
+									"value": "66e0917d0ef4af5553d498d4"
 								},
 								{
-									"key": "id",
-									"value": "66a8ec05163eb86367826d3a"
+									"key": "commentId",
+									"value": "66e1a15dcdb7ae3e1d0b06d4"
 								}
 							]
 						}
@@ -268,7 +331,7 @@
 							"variable": [
 								{
 									"key": "workItemId",
-									"value": ""
+									"value": "66e2e2569da9665f164397e8"
 								}
 							]
 						}
@@ -292,6 +355,88 @@
 							],
 							"path": [
 								"health"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Signup",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": \"me-2\",\r\n    \"password\": \"me-2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/signup",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let response = pm.response.json();\r",
+									"pm.environment.set(\"token\", response.token);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": \"me-1\",\r\n    \"password\": \"me-1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/login",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"login"
 							]
 						}
 					},

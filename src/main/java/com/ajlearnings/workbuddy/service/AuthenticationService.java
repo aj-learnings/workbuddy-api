@@ -2,9 +2,12 @@ package com.ajlearnings.workbuddy.service;
 
 import com.ajlearnings.workbuddy.model.request.LoginRequest;
 import com.ajlearnings.workbuddy.model.response.LoginResponse;
+import com.ajlearnings.workbuddy.model.response.UserResponse;
+import com.ajlearnings.workbuddy.translator.UserTranslator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -21,6 +24,7 @@ public class AuthenticationService implements IAuthenticationService {
         this.userService = userService;
     }
 
+    @Override
     public LoginResponse authenticateUser(LoginRequest loginRequest) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUserName(),
@@ -28,5 +32,13 @@ public class AuthenticationService implements IAuthenticationService {
         var authenticatedUser = userService.getUserByUserName(loginRequest.getUserName());
         String jwtToken = jwtService.generateToken(authenticatedUser);
         return LoginResponse.builder().token(jwtToken).build();
+    }
+
+    @Override
+    public UserResponse verify() {
+        var authentication = SecurityContextHolder.getContext().getAuthentication();
+        var userName = authentication.getName();
+        var user = userService.getUserByUserName(userName);
+        return UserTranslator.ToResponse(user);
     }
 }

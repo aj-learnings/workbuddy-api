@@ -36,4 +36,10 @@ public class AuthController {
         var loginResponse = authenticationService.authenticateUser(loginRequest);
         return new ResponseEntity<>(loginResponse, HttpStatus.OK);
     }
+
+    @GetMapping("/verify")
+    public ResponseEntity<UserResponse> verify() {
+        var userResponse = authenticationService.verify();
+        return new ResponseEntity<>(userResponse, HttpStatus.OK);
+    }
 }

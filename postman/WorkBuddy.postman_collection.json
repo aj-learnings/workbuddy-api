@@ -127,7 +127,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "66e2e2569da9665f164397e8"
+									"value": "66e2e73488dbd23fecd7753d"
 								}
 							]
 						}
@@ -212,7 +212,7 @@
 							"variable": [
 								{
 									"key": "workItemId",
-									"value": "66e0917d0ef4af5553d498d4"
+									"value": "66e2e71f88dbd23fecd7753c"
 								}
 							]
 						}
@@ -331,7 +331,7 @@
 							"variable": [
 								{
 									"key": "workItemId",
-									"value": "66e2e2569da9665f164397e8"
+									"value": "66e2e71f88dbd23fecd7753c"
 								}
 							]
 						}
@@ -423,7 +423,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"userName\": \"me-1\",\r\n    \"password\": \"me-1\"\r\n}",
+							"raw": "{\r\n    \"userName\": \"me-2\",\r\n    \"password\": \"me-2\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -437,6 +437,33 @@
 							],
 							"path": [
 								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/verify",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"verify"
 							]
 						}
 					},

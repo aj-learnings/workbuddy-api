@@ -59,7 +59,7 @@ public class CustomExceptionHandler {
                                         .statusName(HttpStatus.NOT_FOUND.name())
                                         .path(request.getRequestURI())
                                         .method(request.getMethod())
-                                        .timestamp(LocalDateTime.now())
+                                        .timestamp(LocalDateTime.now().toString())
                                         .build();
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
@@ -78,7 +78,7 @@ public class CustomExceptionHandler {
                 .statusName(HttpStatus.CONFLICT.name())
                 .path(request.getRequestURI())
                 .method(request.getMethod())
-                .timestamp(LocalDateTime.now())
+                .timestamp(LocalDateTime.now().toString())
                 .build();
         return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
     }
@@ -97,7 +97,7 @@ public class CustomExceptionHandler {
                                             .statusName(HttpStatus.UNAUTHORIZED.name())
                                             .path(request.getRequestURI())
                                             .method(request.getMethod())
-                                            .timestamp(LocalDateTime.now())
+                                            .timestamp(LocalDateTime.now().toString())
                                             .build();
         return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
     }
@@ -116,7 +116,7 @@ public class CustomExceptionHandler {
                 .statusName(HttpStatus.FORBIDDEN.name())
                 .path(request.getRequestURI())
                 .method(request.getMethod())
-                .timestamp(LocalDateTime.now())
+                .timestamp(LocalDateTime.now().toString())
                 .build();
         return new ResponseEntity<>(errorResponse, HttpStatus.FORBIDDEN);
     }
@@ -135,7 +135,7 @@ public class CustomExceptionHandler {
                 .statusName(HttpStatus.UNAUTHORIZED.name())
                 .path(request.getRequestURI())
                 .method(request.getMethod())
-                .timestamp(LocalDateTime.now())
+                .timestamp(LocalDateTime.now().toString())
                 .build();
         return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
     }
@@ -154,7 +154,7 @@ public class CustomExceptionHandler {
                                         .statusName(HttpStatus.INTERNAL_SERVER_ERROR.name())
                                         .path(request.getRequestURI())
                                         .method(request.getMethod())
-                                        .timestamp(LocalDateTime.now())
+                                        .timestamp(LocalDateTime.now().toString())
                                         .build();
         return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }

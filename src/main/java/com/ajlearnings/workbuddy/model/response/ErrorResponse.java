@@ -15,5 +15,5 @@ public class ErrorResponse {
     private String statusName;
     private String path;
     private String method;
-    private LocalDateTime timestamp;
+    private String timestamp;
 }

@@ -28,6 +28,7 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
                                         .statusName(HttpStatus.UNAUTHORIZED.name())
                                         .path(request.getRequestURI())
                                         .method(request.getMethod())
+                                        .timestamp(LocalDateTime.now().toString())
                                         .build();
         ObjectMapper mapper = new ObjectMapper();
         response.getWriter().write(mapper.writeValueAsString(errorResponse));

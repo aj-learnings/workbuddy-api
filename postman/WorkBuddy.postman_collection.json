@@ -331,7 +331,7 @@
 							"variable": [
 								{
 									"key": "workItemId",
-									"value": "66e2e71f88dbd23fecd7753c"
+									"value": "66e987a9c475547b1d4342b0"
 								}
 							]
 						}
@@ -423,7 +423,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"userName\": \"me-2\",\r\n    \"password\": \"me-2\"\r\n}",
+							"raw": "{\r\n    \"userName\": \"me-1\",\r\n    \"password\": \"me1\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -464,6 +464,135 @@
 							],
 							"path": [
 								"verify"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User Reaction",
+			"item": [
+				{
+					"name": "Add Reaction",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"isLiked\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/comment/id/:commentId/reaction",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"comment",
+								"id",
+								":commentId",
+								"reaction"
+							],
+							"variable": [
+								{
+									"key": "commentId",
+									"value": "66e98c72c475547b1d4342b2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Reaction",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"isLiked\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/reaction/id/:reactionId",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"reaction",
+								"id",
+								":reactionId"
+							],
+							"variable": [
+								{
+									"key": "reactionId",
+									"value": "66ec3d6cb7038f4be61b661d"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Reaction",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/reaction/id/:reactionId",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"reaction",
+								"id",
+								":reactionId"
+							],
+							"variable": [
+								{
+									"key": "reactionId",
+									"value": "66ec3d6cb7038f4be61b661d"
+								}
 							]
 						}
 					},

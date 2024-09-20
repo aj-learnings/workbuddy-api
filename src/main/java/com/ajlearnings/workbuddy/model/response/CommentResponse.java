@@ -3,6 +3,7 @@ package com.ajlearnings.workbuddy.model.response;
 import lombok.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Builder
@@ -15,4 +16,5 @@ public class CommentResponse {
     private Date created;
     private Date updated;
     private String createdBy;
+    private List<UserReactionResponse> userReactions = List.of();
 }

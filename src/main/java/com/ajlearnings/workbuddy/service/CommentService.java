@@ -5,6 +5,7 @@ import com.ajlearnings.workbuddy.exception.ResourceNotFoundException;
 import com.ajlearnings.workbuddy.model.request.CreateCommentRequest;
 import com.ajlearnings.workbuddy.model.request.UpdateCommentRequest;
 import com.ajlearnings.workbuddy.model.response.CommentResponse;
+import com.ajlearnings.workbuddy.model.response.UserReactionResponse;
 import com.ajlearnings.workbuddy.store.ICommentStore;
 import com.ajlearnings.workbuddy.store.IUserStore;
 import com.ajlearnings.workbuddy.store.IWorkItemStore;
@@ -19,6 +20,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -27,11 +30,13 @@ public class CommentService implements ICommentService {
     private final IWorkItemStore workItemStore;
     private final ICommentStore commentStore;
     private final IUserStore userStore;
+    private final IUserReactionService userReactionService;
 
-    public CommentService(IWorkItemStore workItemStore, ICommentStore commentStore, IUserStore userStore) {
+    public CommentService(IWorkItemStore workItemStore, ICommentStore commentStore, IUserStore userStore, IUserReactionService userReactionService) {
         this.workItemStore = workItemStore;
         this.commentStore = commentStore;
         this.userStore = userStore;
+        this.userReactionService = userReactionService;
     }
 
     @Override
@@ -58,7 +63,11 @@ public class CommentService implements ICommentService {
         var workItem = workItemStore.get(workItemId);
         var comments = commentStore.getAllPerWorkItem(workItemId);
         comments.sort(Comparator.comparing(BaseEntity::getCreatedAt));
-        return comments.stream().map(CommentTranslator::ToResponse).toList();
+        var commentsId = comments.stream().map(BaseEntity::getId).toList();
+        var userReactions = userReactionService.getAllUserReactionsForAllComments(commentsId);
+        var userReactionsGroupedByCommentId = userReactions.stream().collect(Collectors.groupingBy(UserReactionResponse::getCommentId));
+        return comments.stream()
+                       .map(comment -> CommentTranslator.ToResponseWithUserReactions(comment, Objects.requireNonNullElse(userReactionsGroupedByCommentId.get(comment.getId().toString()), List.of()))).toList();
     }
 
     @Override

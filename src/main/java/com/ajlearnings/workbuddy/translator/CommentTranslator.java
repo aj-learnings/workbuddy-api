@@ -4,6 +4,9 @@ import com.ajlearnings.workbuddy.entity.Comment;
 import com.ajlearnings.workbuddy.enums.CommentType;
 import com.ajlearnings.workbuddy.model.request.CreateCommentRequest;
 import com.ajlearnings.workbuddy.model.response.CommentResponse;
+import com.ajlearnings.workbuddy.model.response.UserReactionResponse;
+
+import java.util.List;
 
 public class CommentTranslator {
     public static Comment ToEntity(CreateCommentRequest createCommentRequest) {
@@ -22,5 +25,11 @@ public class CommentTranslator {
                                 .updated(comment.getUpdatedAt())
                                 .createdBy(comment.getUser().getUsername())
                                 .build();
+    }
+
+    public static CommentResponse ToResponseWithUserReactions(Comment comment, List<UserReactionResponse> userReactionsResponse) {
+        var response = ToResponse(comment);
+        response.setUserReactions(userReactionsResponse);
+        return response;
     }
 }

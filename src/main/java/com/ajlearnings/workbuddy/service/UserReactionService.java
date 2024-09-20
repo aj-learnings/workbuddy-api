@@ -49,7 +49,7 @@ public class UserReactionService implements IUserReactionService {
         if (!userReaction.getUser().getUsername().equals(user.getUsername())) {
             throw new AccessDeniedException("You do not have permission to update this reaction");
         }
-        userReaction.setLiked(updateUserReactionRequest.isLiked());
+        userReaction.setIsLiked(updateUserReactionRequest.getIsLiked());
         var updatedUserReaction = userReactionStore.update(userReaction);
         return UserReactionTranslator.ToResponse(updatedUserReaction);
     }

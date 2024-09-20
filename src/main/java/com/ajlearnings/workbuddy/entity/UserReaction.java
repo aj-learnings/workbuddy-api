@@ -15,7 +15,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class UserReaction extends BaseEntity implements Serializable {
     @NonNull
-    private boolean isLiked;
+    private Boolean isLiked;
     @DBRef
     private Comment comment;
     @DBRef

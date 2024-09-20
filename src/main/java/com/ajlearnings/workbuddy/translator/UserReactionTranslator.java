@@ -7,13 +7,14 @@ import com.ajlearnings.workbuddy.model.response.UserReactionResponse;
 public class UserReactionTranslator {
     public static UserReaction ToEntity(CreateUserReactionRequest createUserReactionRequest) {
         return UserReaction.builder()
-                           .isLiked(createUserReactionRequest.isLiked())
+                           .isLiked(createUserReactionRequest.getIsLiked())
                            .build();
     }
 
     public static UserReactionResponse ToResponse(UserReaction userReaction) {
         return UserReactionResponse.builder()
-                                   .isLiked(userReaction.isLiked())
+                                   .id(userReaction.getId().toString())
+                                   .isLiked(userReaction.getIsLiked())
                                    .reactedBy(userReaction.getUser().getUsername())
                                    .commentId(userReaction.getComment().getId().toString())
                                    .build();

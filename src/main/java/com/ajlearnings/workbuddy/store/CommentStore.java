@@ -5,6 +5,7 @@ import com.ajlearnings.workbuddy.exception.ResourceNotFoundException;
 import com.ajlearnings.workbuddy.repository.ICommentRepository;
 import org.bson.types.ObjectId;
 import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -48,6 +49,7 @@ public class CommentStore implements ICommentStore {
     }
 
     @Override
+    @CacheEvict(key = "#workItemId + '_all'")
     public void deleteAllPerWorkItem(ObjectId workItemId) {
         commentRepository.deleteAllByWorkItem(workItemId);
     }

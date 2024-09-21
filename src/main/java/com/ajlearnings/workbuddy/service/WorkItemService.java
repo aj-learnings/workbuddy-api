@@ -8,9 +8,6 @@ import com.ajlearnings.workbuddy.store.IWorkItemStore;
 import com.ajlearnings.workbuddy.translator.WorkItemTranslator;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Caching;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -19,7 +16,6 @@ import java.util.List;
 
 @Service
 @Slf4j
-@CacheConfig(cacheNames = "workitem")
 public class WorkItemService implements IWorkItemService {
 
     private final IWorkItemStore workItemStore;
@@ -33,7 +29,6 @@ public class WorkItemService implements IWorkItemService {
     }
 
     @Override
-    @CacheEvict(key = "'all'")
     public WorkItemResponse addWorkItem(CreateWorkItemRequest createWorkItemRequest) {
         var authentication = SecurityContextHolder.getContext().getAuthentication();
         var userName = authentication.getName();
@@ -58,10 +53,6 @@ public class WorkItemService implements IWorkItemService {
     }
 
     @Override
-    @Caching(evict = {
-            @CacheEvict(key = "'all'"),
-            @CacheEvict(key = "#workItemId")
-    })
     public WorkItemResponse updateWorkItem(ObjectId workItemId, UpdateWorkItemRequest updateWorkItem) {
         var authentication = SecurityContextHolder.getContext().getAuthentication();
         var userName = authentication.getName();
@@ -72,15 +63,11 @@ public class WorkItemService implements IWorkItemService {
         }
         workItem.setTitle(updateWorkItem.getTitle());
         workItem.setDescription((updateWorkItem.getDescription()));
-        var updatedWorkItem = workItemStore.update(workItem);
+        var updatedWorkItem =workItemStore.update(workItem.getId(), workItem);
         return WorkItemTranslator.ToResponse(updatedWorkItem);
     }
 
     @Override
-    @Caching(evict = {
-            @CacheEvict(key = "'all'"),
-            @CacheEvict(key = "#workItemId")
-    })
     public boolean deleteWorkItem(ObjectId workItemId) {
         var authentication = SecurityContextHolder.getContext().getAuthentication();
         var userName = authentication.getName();

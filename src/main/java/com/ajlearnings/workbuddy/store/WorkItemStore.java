@@ -4,8 +4,7 @@ import com.ajlearnings.workbuddy.entity.WorkItem;
 import com.ajlearnings.workbuddy.exception.ResourceNotFoundException;
 import com.ajlearnings.workbuddy.repository.IWorkItemRepository;
 import org.bson.types.ObjectId;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,6 +20,7 @@ public class WorkItemStore implements IWorkItemStore {
     }
 
     @Override
+    @CacheEvict(key = "'all'")
     public WorkItem add(WorkItem workItem) {
         return workItemRepository.save(workItem);
     }
@@ -39,11 +39,19 @@ public class WorkItemStore implements IWorkItemStore {
     }
 
     @Override
-    public WorkItem update(WorkItem workItem) {
+    @Caching(
+            put = @CachePut(key = "#workItemId"),
+            evict = @CacheEvict(key = "'all'")
+    )
+    public WorkItem update(ObjectId workItemId, WorkItem workItem) {
         return workItemRepository.save(workItem);
     }
 
     @Override
+    @Caching(evict = {
+            @CacheEvict(key = "'all'"),
+            @CacheEvict(key = "#workItemId")
+    })
     public void delete(ObjectId workItemId) {
         workItemRepository.deleteById(workItemId);
     }

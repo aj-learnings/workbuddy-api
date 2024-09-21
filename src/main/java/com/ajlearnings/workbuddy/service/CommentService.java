@@ -12,8 +12,8 @@ import com.ajlearnings.workbuddy.store.IWorkItemStore;
 import com.ajlearnings.workbuddy.translator.CommentTranslator;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Caching;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -25,6 +25,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
+@CacheConfig(cacheNames = "comment")
 public class CommentService implements ICommentService {
 
     private final IWorkItemStore workItemStore;
@@ -40,11 +41,7 @@ public class CommentService implements ICommentService {
     }
 
     @Override
-    @Caching(evict = {
-            @CacheEvict(value = "comment", key = "#workItemId + '_all'"),
-            @CacheEvict(value = "workitem", key = "#workItemId"),
-            @CacheEvict(value = "workitem", key = "'all'")
-    })
+    @CacheEvict(key = "#workItemId + '_all'")
     public CommentResponse addComment(ObjectId workItemId, CreateCommentRequest createCommentRequest) {
         var authentication = SecurityContextHolder.getContext().getAuthentication();
         var userName = authentication.getName();
@@ -54,7 +51,7 @@ public class CommentService implements ICommentService {
         comment.setWorkItem(workItem);
         comment.setUser(user);
         var addedComment = commentStore.add(comment);
-        workItemStore.update(workItem);
+        workItemStore.update(workItem.getId(), workItem);
         return CommentTranslator.ToResponse(addedComment);
     }
 
@@ -71,11 +68,7 @@ public class CommentService implements ICommentService {
     }
 
     @Override
-    @Caching(evict = {
-            @CacheEvict(value = "comment", key = "#workItemId + '_all'"),
-            @CacheEvict(value = "workitem", key = "#workItemId"),
-            @CacheEvict(value = "workitem", key = "'all'")
-    })
+    @CacheEvict(key = "#workItemId + '_all'")
     public CommentResponse updateComment(ObjectId workItemId, ObjectId commentId, UpdateCommentRequest updateCommentRequest) {
         var authentication = SecurityContextHolder.getContext().getAuthentication();
         var userName = authentication.getName();
@@ -90,16 +83,12 @@ public class CommentService implements ICommentService {
         }
         comment.setText(updateCommentRequest.getText());
         var updatedComment = commentStore.update(comment);
-        workItemStore.update(workItem);
+        workItemStore.update(workItem.getId(), workItem);
         return CommentTranslator.ToResponse(updatedComment);
     }
 
     @Override
-    @Caching(evict = {
-            @CacheEvict(value = "comment", key = "#workItemId + '_all'"),
-            @CacheEvict(value = "workitem", key = "#workItemId"),
-            @CacheEvict(value = "workitem", key = "'all'")
-    })
+    @CacheEvict(key = "#workItemId + '_all'")
     public boolean deleteComment(ObjectId workItemId, ObjectId commentId) {
         var authentication = SecurityContextHolder.getContext().getAuthentication();
         var userName = authentication.getName();
@@ -113,16 +102,11 @@ public class CommentService implements ICommentService {
             throw new ResourceNotFoundException("Comment does not exist in given workitem.");
         }
         commentStore.delete(commentId);
-        workItemStore.update(workItem);
+        workItemStore.update(workItem.getId(), workItem);
         return true;
     }
 
     @Override
-    @Caching(evict = {
-            @CacheEvict(value = "comment", key = "#workItemId + '_all'"),
-            @CacheEvict(value = "workitem", key = "#workItemId"),
-            @CacheEvict(value = "workitem", key = "'all'")
-    })
     public void deleteAllCommentsPerWorkItem(ObjectId workItemId) {
         commentStore.deleteAllPerWorkItem(workItemId);
     }

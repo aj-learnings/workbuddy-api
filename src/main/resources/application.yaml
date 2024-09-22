@@ -12,8 +12,9 @@ spring:
       password: ${REDIS_PASSWORD:}
   cache:
     type: redis
-    redis:
-      time-to-live: 3600s
+    time-to-live:
+      general: 3600
+      otp: 120
 server:
   port: 9401
   servlet:

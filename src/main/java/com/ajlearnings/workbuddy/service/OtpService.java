@@ -16,13 +16,13 @@ public class OtpService implements IOtpService {
 
     @Override
     @CachePut(key = "#uniqueIdentifier")
-    public int generateOTP(String uniqueIdentifier) {
-        return 1000 + random.nextInt(9000);
+    public long generateOTP(String uniqueIdentifier, int digits) {
+        return (long) Math.pow(10, digits-1) + random.nextLong((long) (9 * Math.pow(10, digits-1)));
     }
 
     @Override
     @Cacheable(key = "#uniqueIdentifier")
-    public int getOTP(String uniqueIdentifier) {
+    public long getOTP(String uniqueIdentifier) {
         throw new ResourceNotFoundException("Please generate OTP again.");
     }
 }

@@ -4,6 +4,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface IOtpService {
-    int generateOTP(String uniqueIdentifier);
-    int getOTP(String uniqueIdentifier);
+    long generateOTP(String uniqueIdentifier, int digits);
+    long getOTP(String uniqueIdentifier);
 }

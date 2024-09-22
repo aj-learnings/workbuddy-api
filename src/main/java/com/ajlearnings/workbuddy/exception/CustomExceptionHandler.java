@@ -12,6 +12,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -43,6 +44,25 @@ public class CustomExceptionHandler {
             errors.put(fieldName, errorMessage);
         });
         return new ResponseEntity<>(errors, HttpStatus.UNPROCESSABLE_ENTITY);
+    }
+
+    @ExceptionHandler(NoHandlerFoundException.class)
+    public ResponseEntity<?> handleNoHandlerException(NoHandlerFoundException exception, HttpServletRequest request) {
+        var guid = UUID.randomUUID().toString();
+        log.error(
+                String.format("Error GUID=%s; error message: %s", guid, exception.getMessage()),
+                exception
+        );
+        var errorResponse = ErrorResponse.builder()
+                .guid(guid)
+                .message("Endpoint does not exist")
+                .statusCode(HttpStatus.NOT_FOUND.value())
+                .statusName(HttpStatus.NOT_FOUND.name())
+                .path(request.getRequestURI())
+                .method(request.getMethod())
+                .timestamp(LocalDateTime.now().toString())
+                .build();
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(ResourceNotFoundException.class)

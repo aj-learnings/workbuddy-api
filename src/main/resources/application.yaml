@@ -1,6 +1,11 @@
 spring:
   application:
     name: WorkBuddy
+  mvc:
+    throw-exception-if-no-handler-found: true
+  web:
+    resources:
+      add-mappings: false
   data:
     mongodb:
       uri: ${MONGO_URI:mongodb://localhost:27017}

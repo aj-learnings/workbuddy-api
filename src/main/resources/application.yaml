@@ -20,6 +20,17 @@ spring:
     time-to-live:
       general: 3600
       otp: 120
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${SENDER_EMAIL:email@email.com}
+    password: ${GOOGLE_APP_PASSWORD:password}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 server:
   port: 9401
   servlet:

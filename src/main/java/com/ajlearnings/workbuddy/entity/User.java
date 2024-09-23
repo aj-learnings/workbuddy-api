@@ -1,5 +1,6 @@
 package com.ajlearnings.workbuddy.entity;
 
+import jakarta.validation.constraints.Email;
 import lombok.*;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -22,6 +23,9 @@ public class User extends BaseEntity implements UserDetails, Serializable {
     private String userName;
     @NonNull
     private String password;
+    @Email
+    @Indexed(unique = true)
+    private String email;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

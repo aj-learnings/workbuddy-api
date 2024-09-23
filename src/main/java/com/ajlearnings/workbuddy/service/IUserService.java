@@ -10,4 +10,5 @@ public interface IUserService {
 
     UserResponse addUser(CreateUserRequest createUserRequest);
     User getUserByUserName(String userName);
+    boolean existsByEmail(String email);
 }

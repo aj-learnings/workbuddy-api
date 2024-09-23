@@ -33,4 +33,9 @@ public class UserStore implements IUserStore {
     public boolean existsByUserName(String userName) {
         return userRepository.existsByUserName(userName);
     }
+
+    @Override
+    public boolean existsByEmail(String email) {
+        return userRepository.existsByEmail(email);
+    }
 }

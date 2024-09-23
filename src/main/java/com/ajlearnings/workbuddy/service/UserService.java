@@ -28,6 +28,9 @@ public class UserService implements IUserService {
         if (this.existsByUserName((createUserRequest.getUserName()))) {
             throw new UserAlreadyExistException("Username already exist");
         }
+        if (this.existsByEmail((createUserRequest.getEmail()))) {
+            throw new UserAlreadyExistException("Email already exist");
+        }
         var newUser = UserTranslator.ToEntity(createUserRequest);
         newUser.setPassword(passwordEncoder.encode(createUserRequest.getPassword()));
         try {
@@ -45,5 +48,10 @@ public class UserService implements IUserService {
 
     private boolean existsByUserName(String userName) {
         return userStore.existsByUserName(userName);
+    }
+
+    @Override
+    public boolean existsByEmail(String email) {
+        return userStore.existsByEmail(email);
     }
 }

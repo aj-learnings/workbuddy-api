@@ -24,14 +24,14 @@ public class EmailVerificationController {
     }
 
     @PostMapping("/otp")
-    public ResponseEntity<Void> generateOTP(@Valid @RequestBody EmailOTPRequest emailOTPRequest) {
-        emailVerificationService.generateOTPAndSendEmail(emailOTPRequest);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    public ResponseEntity<Boolean> generateOTP(@Valid @RequestBody EmailOTPRequest emailOTPRequest) {
+        var emailSend = emailVerificationService.generateOTPAndSendEmail(emailOTPRequest);
+        return new ResponseEntity<>(emailSend, HttpStatus.OK);
     }
 
     @PostMapping("/verify")
     public ResponseEntity<Boolean> verifyOTP(@Valid @RequestBody EmailVerificationRequest emailVerificationRequest) {
         var isOTPValid = emailVerificationService.verifyEmail(emailVerificationRequest);
-        return new ResponseEntity<Boolean>(isOTPValid, HttpStatus.OK);
+        return new ResponseEntity<>(isOTPValid, HttpStatus.OK);
     }
 }

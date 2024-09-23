@@ -42,16 +42,20 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public User getUserByUserName(String userName) {
-        return userStore.getByUserName(userName);
-    }
-
-    private boolean existsByUserName(String userName) {
-        return userStore.existsByUserName(userName);
+    public User getUserByUserNameOrEmail(String userNameOrEmail) {
+        try {
+            return userStore.getByUserName(userNameOrEmail);
+        } catch (Exception ex) {
+            return userStore.getByEmail(userNameOrEmail);
+        }
     }
 
     @Override
     public boolean existsByEmail(String email) {
         return userStore.existsByEmail(email);
+    }
+
+    private boolean existsByUserName(String userName) {
+        return userStore.existsByUserName(userName);
     }
 }

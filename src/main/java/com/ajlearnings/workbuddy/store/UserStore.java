@@ -30,6 +30,12 @@ public class UserStore implements IUserStore {
     }
 
     @Override
+    public User getByEmail(String email) {
+        return userRepository.findByEmail(email)
+                             .orElseThrow(() -> new UsernameNotFoundException("User not found with email : " + email));
+    }
+
+    @Override
     public boolean existsByUserName(String userName) {
         return userRepository.existsByUserName(userName);
     }

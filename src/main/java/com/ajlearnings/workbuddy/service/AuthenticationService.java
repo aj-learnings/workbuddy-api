@@ -27,9 +27,9 @@ public class AuthenticationService implements IAuthenticationService {
     @Override
     public LoginResponse authenticateUser(LoginRequest loginRequest) {
         authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getUserName(),
+                new UsernamePasswordAuthenticationToken(loginRequest.getUserNameOrEmail(),
                         loginRequest.getPassword()));
-        var authenticatedUser = userService.getUserByUserName(loginRequest.getUserName());
+        var authenticatedUser = userService.getUserByUserNameOrEmail(loginRequest.getUserNameOrEmail());
         String jwtToken = jwtService.generateToken(authenticatedUser);
         return LoginResponse.builder().token(jwtToken).build();
     }
@@ -38,7 +38,7 @@ public class AuthenticationService implements IAuthenticationService {
     public UserResponse verify() {
         var authentication = SecurityContextHolder.getContext().getAuthentication();
         var userName = authentication.getName();
-        var user = userService.getUserByUserName(userName);
+        var user = userService.getUserByUserNameOrEmail(userName);
         return UserTranslator.ToResponse(user);
     }
 }

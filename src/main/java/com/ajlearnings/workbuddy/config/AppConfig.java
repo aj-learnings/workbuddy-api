@@ -21,7 +21,7 @@ public class AppConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return userService::getUserByUserName;
+        return userService::getUserByUserNameOrEmail;
     }
 
     @Bean

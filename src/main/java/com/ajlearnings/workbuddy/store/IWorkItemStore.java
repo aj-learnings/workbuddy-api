@@ -11,6 +11,6 @@ public interface IWorkItemStore {
     WorkItem add(WorkItem workItem);
     List<WorkItem> getAll();
     WorkItem get(ObjectId workItemId);
-    WorkItem update(ObjectId workItemId, WorkItem workItem);
+    WorkItem update(WorkItem workItem);
     void delete(ObjectId workItemId);
 }

@@ -63,7 +63,7 @@ public class WorkItemService implements IWorkItemService {
         }
         workItem.setTitle(updateWorkItem.getTitle());
         workItem.setDescription((updateWorkItem.getDescription()));
-        var updatedWorkItem =workItemStore.update(workItem.getId(), workItem);
+        var updatedWorkItem = workItemStore.update(workItem);
         return WorkItemTranslator.ToResponse(updatedWorkItem);
     }
 

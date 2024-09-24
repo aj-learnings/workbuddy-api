@@ -40,10 +40,10 @@ public class WorkItemStore implements IWorkItemStore {
 
     @Override
     @Caching(
-            put = @CachePut(key = "#workItemId"),
+            put = @CachePut(key = "#workItem.id"),
             evict = @CacheEvict(key = "'all'")
     )
-    public WorkItem update(ObjectId workItemId, WorkItem workItem) {
+    public WorkItem update(WorkItem workItem) {
         return workItemRepository.save(workItem);
     }
 

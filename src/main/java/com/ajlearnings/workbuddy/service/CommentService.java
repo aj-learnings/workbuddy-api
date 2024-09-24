@@ -51,7 +51,7 @@ public class CommentService implements ICommentService {
         comment.setWorkItem(workItem);
         comment.setUser(user);
         var addedComment = commentStore.add(comment);
-        workItemStore.update(workItem.getId(), workItem);
+        workItemStore.update(workItem);
         return CommentTranslator.ToResponse(addedComment);
     }
 
@@ -83,7 +83,7 @@ public class CommentService implements ICommentService {
         }
         comment.setText(updateCommentRequest.getText());
         var updatedComment = commentStore.update(comment);
-        workItemStore.update(workItem.getId(), workItem);
+        workItemStore.update(workItem);
         return CommentTranslator.ToResponse(updatedComment);
     }
 
@@ -102,7 +102,7 @@ public class CommentService implements ICommentService {
             throw new ResourceNotFoundException("Comment does not exist in given workitem.");
         }
         commentStore.delete(commentId);
-        workItemStore.update(workItem.getId(), workItem);
+        workItemStore.update(workItem);
         return true;
     }
 

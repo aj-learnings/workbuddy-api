@@ -17,7 +17,6 @@ public class UserTranslator {
     public static UserResponse ToResponse(User user) {
         return UserResponse.builder()
                             .username(user.getUsername())
-                            .email(user.getEmail())
                             .isVerified(user.getIsVerified())
                             .build();
     }

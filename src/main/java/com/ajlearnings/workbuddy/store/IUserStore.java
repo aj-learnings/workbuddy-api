@@ -10,4 +10,5 @@ public interface IUserStore {
     User getByEmail(String email);
     boolean existsByUserName(String userName);
     boolean existsByEmail(String email);
+    User update(User user);
 }

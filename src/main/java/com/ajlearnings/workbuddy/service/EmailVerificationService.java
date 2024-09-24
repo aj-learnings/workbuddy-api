@@ -3,9 +3,10 @@ package com.ajlearnings.workbuddy.service;
 import com.ajlearnings.workbuddy.Constants;
 import com.ajlearnings.workbuddy.exception.UserAlreadyExistException;
 import com.ajlearnings.workbuddy.model.EmailData;
-import com.ajlearnings.workbuddy.model.request.EmailOTPRequest;
 import com.ajlearnings.workbuddy.model.request.EmailVerificationRequest;
+import com.ajlearnings.workbuddy.store.IUserStore;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.Random;
@@ -18,23 +19,26 @@ public class EmailVerificationService implements IEmailVerificationService {
 
     private static final Random random = new Random();
     private final IOtpService otpService;
-    private final IUserService userService;
+    private final IUserStore userStore;
     private final IEmailService emailService;
 
-    public EmailVerificationService(IOtpService otpService, IUserService userService, IEmailService emailService) {
+    public EmailVerificationService(IOtpService otpService, IUserStore userStore, IEmailService emailService) {
         this.otpService = otpService;
-        this.userService = userService;
+        this.userStore = userStore;
         this.emailService = emailService;
     }
 
     @Override
-    public boolean generateOTPAndSendEmail(EmailOTPRequest emailOTPRequest) {
-        if (this.userService.existsByEmail(emailOTPRequest.getEmailId())) {
-            throw new UserAlreadyExistException("Email already exist");
+    public boolean generateOTPAndSendEmail() {
+        var authentication = SecurityContextHolder.getContext().getAuthentication();
+        var userName = authentication.getName();
+        var user = userStore.getByUserName(userName);
+        if (user.getIsVerified()) {
+            throw new UserAlreadyExistException("User is already verified");
         }
-        var otp = otpService.generateOTP(emailOTPRequest.getEmailId(), 4);
+        var otp = otpService.generateOTP(user.getEmail(), 4);
         var emailData = EmailData.builder()
-                                 .to(emailOTPRequest.getEmailId())
+                                 .to(user.getEmail())
                                  .subject(Constants.EmailOTP.Subject)
                                  .body(String.format(Constants.EmailOTP.Body, otp, otpValidity))
                                  .build();
@@ -43,10 +47,18 @@ public class EmailVerificationService implements IEmailVerificationService {
 
     @Override
     public boolean verifyEmail(EmailVerificationRequest emailVerificationRequest) {
-        if (this.userService.existsByEmail(emailVerificationRequest.getEmailId())) {
-            throw new UserAlreadyExistException("Email already exist");
+        var authentication = SecurityContextHolder.getContext().getAuthentication();
+        var userName = authentication.getName();
+        var user = userStore.getByUserName(userName);
+        var otp = otpService.getOTP(user.getEmail());
+        if (user.getIsVerified()) {
+            throw new UserAlreadyExistException("User is already verified");
         }
-        var otp = otpService.getOTP(emailVerificationRequest.getEmailId());
-        return otp == emailVerificationRequest.getOtp();
+        if (otp == emailVerificationRequest.getOtp()) {
+            user.setIsVerified(true);
+            userStore.update(user);
+            return true;
+        }
+        return false;
     }
 }

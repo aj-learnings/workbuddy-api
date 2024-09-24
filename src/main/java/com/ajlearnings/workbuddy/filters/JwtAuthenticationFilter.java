@@ -18,6 +18,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 
 import java.io.IOException;
+import java.util.List;
 
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
@@ -65,7 +66,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     SecurityContextHolder.getContext().setAuthentication(authToken);
                 }
 
-                if (!user.getIsVerified()) {
+                var paths = List.of("/email-verification", "/verify");
+
+                if (!user.getIsVerified() && !paths.contains(request.getServletPath())) {
                     throw new AccessDeniedException("You email is not verified yet. Please verify it.");
                 }
             }

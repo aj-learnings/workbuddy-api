@@ -36,8 +36,8 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.authorizeHttpRequests(request -> request
-                        .requestMatchers("/login" , "/signup", "/email-verification/**").permitAll()
-                        .requestMatchers("/verify").authenticated()
+                        .requestMatchers("/login" , "/signup").permitAll()
+                        .requestMatchers("/verify",  "/email-verification/**").authenticated()
                         .requestMatchers(HttpMethod.GET).permitAll()
                         .anyRequest().authenticated())
                     .exceptionHandling(exception -> exception

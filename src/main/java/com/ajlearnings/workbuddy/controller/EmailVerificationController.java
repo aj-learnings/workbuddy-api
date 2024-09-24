@@ -1,16 +1,12 @@
 package com.ajlearnings.workbuddy.controller;
 
-import com.ajlearnings.workbuddy.model.request.EmailOTPRequest;
 import com.ajlearnings.workbuddy.model.request.EmailVerificationRequest;
 import com.ajlearnings.workbuddy.service.IEmailVerificationService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/email-verification")
@@ -23,13 +19,13 @@ public class EmailVerificationController {
         this.emailVerificationService = emailVerificationService;
     }
 
-    @PostMapping("/otp")
-    public ResponseEntity<Boolean> generateOTP(@Valid @RequestBody EmailOTPRequest emailOTPRequest) {
-        var emailSend = emailVerificationService.generateOTPAndSendEmail(emailOTPRequest);
+    @GetMapping
+    public ResponseEntity<Boolean> generateOTP() {
+        var emailSend = emailVerificationService.generateOTPAndSendEmail();
         return new ResponseEntity<>(emailSend, HttpStatus.OK);
     }
 
-    @PostMapping("/verify")
+    @PostMapping
     public ResponseEntity<Boolean> verifyOTP(@Valid @RequestBody EmailVerificationRequest emailVerificationRequest) {
         var isOTPValid = emailVerificationService.verifyEmail(emailVerificationRequest);
         return new ResponseEntity<>(isOTPValid, HttpStatus.OK);

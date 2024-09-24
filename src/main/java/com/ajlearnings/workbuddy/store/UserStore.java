@@ -3,7 +3,6 @@ package com.ajlearnings.workbuddy.store;
 import com.ajlearnings.workbuddy.entity.User;
 import com.ajlearnings.workbuddy.repository.IUserRepository;
 import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +22,6 @@ public class UserStore implements IUserStore {
     }
 
     @Override
-    @Cacheable(key = "#userName")
     public User getByUserName(String userName) {
         return userRepository.findByUserName(userName)
                              .orElseThrow(() -> new UsernameNotFoundException("User not found with username : " + userName));
@@ -43,5 +41,10 @@ public class UserStore implements IUserStore {
     @Override
     public boolean existsByEmail(String email) {
         return userRepository.existsByEmail(email);
+    }
+
+    @Override
+    public User update(User user) {
+        return userRepository.save(user);
     }
 }

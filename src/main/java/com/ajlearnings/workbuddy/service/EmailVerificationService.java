@@ -31,8 +31,8 @@ public class EmailVerificationService implements IEmailVerificationService {
     @Override
     public boolean generateOTPAndSendEmail() {
         var authentication = SecurityContextHolder.getContext().getAuthentication();
-        var userName = authentication.getName();
-        var user = userStore.getByUserName(userName);
+        var username = authentication.getName();
+        var user = userStore.getByUsername(username);
         if (user.getIsVerified()) {
             throw new UserAlreadyExistException("User is already verified");
         }
@@ -48,8 +48,8 @@ public class EmailVerificationService implements IEmailVerificationService {
     @Override
     public boolean verifyEmail(EmailVerificationRequest emailVerificationRequest) {
         var authentication = SecurityContextHolder.getContext().getAuthentication();
-        var userName = authentication.getName();
-        var user = userStore.getByUserName(userName);
+        var username = authentication.getName();
+        var user = userStore.getByUsername(username);
         var otp = otpService.getOTP(user.getEmail());
         if (user.getIsVerified()) {
             throw new UserAlreadyExistException("User is already verified");

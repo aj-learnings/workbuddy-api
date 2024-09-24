@@ -11,7 +11,7 @@ import lombok.*;
 public class CreateUserRequest {
     @NotBlank(message = "Username should not be blank")
     @NotNull
-    private String userName;
+    private String username;
     @NotBlank(message = "Password should not be blank")
     @NotNull
     private String password;

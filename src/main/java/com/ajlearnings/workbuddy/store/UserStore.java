@@ -22,9 +22,9 @@ public class UserStore implements IUserStore {
     }
 
     @Override
-    public User getByUserName(String userName) {
-        return userRepository.findByUserName(userName)
-                             .orElseThrow(() -> new UsernameNotFoundException("User not found with username : " + userName));
+    public User getByUsername(String username) {
+        return userRepository.findByUsername(username)
+                             .orElseThrow(() -> new UsernameNotFoundException("User not found with username : " + username));
     }
 
     @Override
@@ -34,8 +34,8 @@ public class UserStore implements IUserStore {
     }
 
     @Override
-    public boolean existsByUserName(String userName) {
-        return userRepository.existsByUserName(userName);
+    public boolean existsByUsername(String username) {
+        return userRepository.existsByUsername(username);
     }
 
     @Override

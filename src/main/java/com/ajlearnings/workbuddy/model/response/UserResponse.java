@@ -7,7 +7,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserResponse {
-    private String userName;
+    private String username;
     private String email;
     private Boolean isVerified;
 }

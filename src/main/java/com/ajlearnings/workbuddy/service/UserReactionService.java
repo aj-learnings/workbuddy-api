@@ -30,8 +30,8 @@ public class UserReactionService implements IUserReactionService {
     @Override
     public UserReactionResponse addUserReactionForComment(ObjectId commentId, CreateUserReactionRequest createUserReactionRequest) {
         var authentication = SecurityContextHolder.getContext().getAuthentication();
-        var userName = authentication.getName();
-        var user = userStore.getByUserName(userName);
+        var username = authentication.getName();
+        var user = userStore.getByUsername(username);
         var comment = commentStore.get(commentId);
         var userReaction = UserReactionTranslator.ToEntity(createUserReactionRequest);
         userReaction.setUser(user);
@@ -43,8 +43,8 @@ public class UserReactionService implements IUserReactionService {
     @Override
     public UserReactionResponse updateUserReaction(ObjectId userReactionId, UpdateUserReactionRequest updateUserReactionRequest) {
         var authentication = SecurityContextHolder.getContext().getAuthentication();
-        var userName = authentication.getName();
-        var user = userStore.getByUserName(userName);
+        var username = authentication.getName();
+        var user = userStore.getByUsername(username);
         var userReaction = userReactionStore.get(userReactionId);
         if (!userReaction.getUser().getUsername().equals(user.getUsername())) {
             throw new AccessDeniedException("You do not have permission to update this reaction");
@@ -63,11 +63,11 @@ public class UserReactionService implements IUserReactionService {
     @Override
     public boolean deleteUserReaction(ObjectId userReactionId) {
         var authentication = SecurityContextHolder.getContext().getAuthentication();
-        var userName = authentication.getName();
-        var user = userStore.getByUserName(userName);
+        var username = authentication.getName();
+        var user = userStore.getByUsername(username);
         var userReaction = userReactionStore.get(userReactionId);
         if (!userReaction.getUser().getUsername().equals(user.getUsername())) {
-            throw new AccessDeniedException("You do not have permission to update this reaction");
+            throw new AccessDeniedException("You do not have permission to delete this reaction");
         }
         userReactionStore.delete(userReactionId);
         return true;

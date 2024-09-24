@@ -25,7 +25,7 @@ public class UserService implements IUserService {
 
     @Override
     public UserResponse addUser(CreateUserRequest createUserRequest) {
-        if (this.existsByUserName((createUserRequest.getUserName()))) {
+        if (this.existsByUsername((createUserRequest.getUsername()))) {
             throw new UserAlreadyExistException("Username already exist");
         }
         if (this.existsByEmail((createUserRequest.getEmail()))) {
@@ -42,11 +42,11 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public User getUserByUserNameOrEmail(String userNameOrEmail) {
+    public User getUserByUsernameOrEmail(String usernameOrEmail) {
         try {
-            return userStore.getByUserName(userNameOrEmail);
+            return userStore.getByUsername(usernameOrEmail);
         } catch (Exception ex) {
-            return userStore.getByEmail(userNameOrEmail);
+            return userStore.getByEmail(usernameOrEmail);
         }
     }
 
@@ -55,7 +55,7 @@ public class UserService implements IUserService {
         return userStore.existsByEmail(email);
     }
 
-    private boolean existsByUserName(String userName) {
-        return userStore.existsByUserName(userName);
+    private boolean existsByUsername(String username) {
+        return userStore.existsByUsername(username);
     }
 }

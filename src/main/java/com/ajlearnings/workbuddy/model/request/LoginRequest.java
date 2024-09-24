@@ -10,7 +10,7 @@ import lombok.*;
 public class LoginRequest {
     @NotBlank(message = "Username or Email should not be blank")
     @NotNull
-    private String userNameOrEmail;
+    private String usernameOrEmail;
     @NotBlank(message = "Password should not be blank")
     @NotNull
     private String password;

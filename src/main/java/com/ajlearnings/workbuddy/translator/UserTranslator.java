@@ -7,7 +7,7 @@ import com.ajlearnings.workbuddy.model.response.UserResponse;
 public class UserTranslator {
     public static User ToEntity(CreateUserRequest createUserRequest) {
         return User.builder()
-                    .userName(createUserRequest.getUserName())
+                    .username(createUserRequest.getUsername())
                     .email(createUserRequest.getEmail())
                     .password(createUserRequest.getPassword())
                     .isVerified(false)
@@ -16,7 +16,7 @@ public class UserTranslator {
 
     public static UserResponse ToResponse(User user) {
         return UserResponse.builder()
-                            .userName(user.getUsername())
+                            .username(user.getUsername())
                             .email(user.getEmail())
                             .isVerified(user.getIsVerified())
                             .build();

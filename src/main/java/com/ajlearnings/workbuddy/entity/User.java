@@ -20,7 +20,7 @@ import java.util.List;
 public class User extends BaseEntity implements UserDetails, Serializable {
     @NonNull
     @Indexed(unique = true)
-    private String userName;
+    private String username;
     @NonNull
     private String password;
     @Email
@@ -36,7 +36,7 @@ public class User extends BaseEntity implements UserDetails, Serializable {
 
     @Override
     public String getUsername() {
-        return userName;
+        return username;
     }
 
     @Override

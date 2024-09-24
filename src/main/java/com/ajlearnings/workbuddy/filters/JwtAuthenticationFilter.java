@@ -48,12 +48,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         try {
             final String jwt = authHeader.substring(7);
-            final String userName = jwtService.extractUsername(jwt);
+            final String username = jwtService.extractUsername(jwt);
 
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-            if (userName != null && authentication == null) {
-                var user = (User)this.userDetailsService.loadUserByUsername(userName);
+            if (username != null && authentication == null) {
+                var user = (User)this.userDetailsService.loadUserByUsername(username);
 
                 if (jwtService.isTokenValid(jwt, user)) {
                     UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
@@ -69,7 +69,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 var paths = List.of("/email-verification", "/verify");
 
                 if (!user.getIsVerified() && !paths.contains(request.getServletPath())) {
-                    throw new AccessDeniedException("You email is not verified yet. Please verify it.");
+                    throw new AccessDeniedException("Email not verified.");
                 }
             }
 

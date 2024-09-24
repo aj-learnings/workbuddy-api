@@ -44,8 +44,8 @@ public class CommentService implements ICommentService {
     @CacheEvict(key = "#workItemId + '_all'")
     public CommentResponse addComment(ObjectId workItemId, CreateCommentRequest createCommentRequest) {
         var authentication = SecurityContextHolder.getContext().getAuthentication();
-        var userName = authentication.getName();
-        var user = userStore.getByUserName(userName);
+        var username = authentication.getName();
+        var user = userStore.getByUsername(username);
         var workItem = workItemStore.get(workItemId);
         var comment = CommentTranslator.ToEntity(createCommentRequest);
         comment.setWorkItem(workItem);
@@ -71,8 +71,8 @@ public class CommentService implements ICommentService {
     @CacheEvict(key = "#workItemId + '_all'")
     public CommentResponse updateComment(ObjectId workItemId, ObjectId commentId, UpdateCommentRequest updateCommentRequest) {
         var authentication = SecurityContextHolder.getContext().getAuthentication();
-        var userName = authentication.getName();
-        var user = userStore.getByUserName(userName);
+        var username = authentication.getName();
+        var user = userStore.getByUsername(username);
         var workItem = workItemStore.get(workItemId);
         var comment = commentStore.get(commentId);
         if (!comment.getUser().getUsername().equals(user.getUsername())) {
@@ -91,8 +91,8 @@ public class CommentService implements ICommentService {
     @CacheEvict(key = "#workItemId + '_all'")
     public boolean deleteComment(ObjectId workItemId, ObjectId commentId) {
         var authentication = SecurityContextHolder.getContext().getAuthentication();
-        var userName = authentication.getName();
-        var user = userStore.getByUserName(userName);
+        var username = authentication.getName();
+        var user = userStore.getByUsername(username);
         var workItem = workItemStore.get(workItemId);
         var comment = commentStore.get(commentId);
         if (!comment.getUser().getUsername().equals(user.getUsername())) {

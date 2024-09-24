@@ -6,9 +6,9 @@ import org.springframework.stereotype.Service;
 @Service
 public interface IUserStore {
     User add(User user);
-    User getByUserName(String userName);
+    User getByUsername(String username);
     User getByEmail(String email);
-    boolean existsByUserName(String userName);
+    boolean existsByUsername(String username);
     boolean existsByEmail(String email);
     User update(User user);
 }

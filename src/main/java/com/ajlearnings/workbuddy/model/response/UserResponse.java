@@ -9,4 +9,5 @@ import lombok.*;
 public class UserResponse {
     private String userName;
     private String email;
+    private Boolean isVerified;
 }

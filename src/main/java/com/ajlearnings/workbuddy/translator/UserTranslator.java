@@ -10,6 +10,7 @@ public class UserTranslator {
                     .userName(createUserRequest.getUserName())
                     .email(createUserRequest.getEmail())
                     .password(createUserRequest.getPassword())
+                    .isVerified(false)
                     .build();
     }
 
@@ -17,6 +18,7 @@ public class UserTranslator {
         return UserResponse.builder()
                             .userName(user.getUsername())
                             .email(user.getEmail())
+                            .isVerified(user.getIsVerified())
                             .build();
     }
 }

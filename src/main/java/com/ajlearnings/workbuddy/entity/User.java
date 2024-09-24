@@ -26,6 +26,8 @@ public class User extends BaseEntity implements UserDetails, Serializable {
     @Email
     @Indexed(unique = true)
     private String email;
+    @NonNull
+    private Boolean isVerified = false;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

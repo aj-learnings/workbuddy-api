@@ -1,15 +1,16 @@
 package com.ajlearnings.workbuddy.filters;
 
+import com.ajlearnings.workbuddy.entity.User;
 import com.ajlearnings.workbuddy.service.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.lang.NonNull;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
@@ -51,17 +52,21 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
             if (userName != null && authentication == null) {
-                UserDetails userDetails = this.userDetailsService.loadUserByUsername(userName);
+                var user = (User)this.userDetailsService.loadUserByUsername(userName);
 
-                if (jwtService.isTokenValid(jwt, userDetails)) {
+                if (jwtService.isTokenValid(jwt, user)) {
                     UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                            userDetails,
+                            user,
                             null,
-                            userDetails.getAuthorities()
+                            user.getAuthorities()
                     );
 
                     authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authToken);
+                }
+
+                if (!user.getIsVerified()) {
+                    throw new AccessDeniedException("You email is not verified yet. Please verify it.");
                 }
             }
 

@@ -26,7 +26,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"title\": \"Testing title 2\",\r\n    \"description\": \"Testing description 2\",\r\n    \"type\": \"GENERAL\"\r\n}",
+							"raw": "{\r\n    \"title\": \"Testing title 1\",\r\n    \"description\": \"Testing description 1\",\r\n    \"type\": \"GENERAL\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -83,7 +83,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "66e2e2019da9665f164397e7"
+									"value": "66f2ef2bd4368d627e361810"
 								}
 							]
 						}
@@ -107,7 +107,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"title\": \"Testing Title 2 edited\",\r\n    \"description\": \"Testing description 2 edited\"\r\n}",
+							"raw": "{\r\n    \"title\": \"Testing Title 1 edited\",\r\n    \"description\": \"Testing description 1 edited\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -127,7 +127,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "66e2e73488dbd23fecd7753d"
+									"value": "66f2ef2bd4368d627e361810"
 								}
 							]
 						}
@@ -162,7 +162,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "66e2e2019da9665f164397e7"
+									"value": "66f1a49d03568c70619b12af"
 								}
 							]
 						}
@@ -212,7 +212,7 @@
 							"variable": [
 								{
 									"key": "workItemId",
-									"value": "66e2e71f88dbd23fecd7753c"
+									"value": "66f2e71c4f3f82230146994c"
 								}
 							]
 						}
@@ -259,11 +259,11 @@
 							"variable": [
 								{
 									"key": "workItemId",
-									"value": "66e0917d0ef4af5553d498d4"
+									"value": "66f1a49d03568c70619b12af"
 								},
 								{
 									"key": "commentId",
-									"value": "66e1a15dcdb7ae3e1d0b06d4"
+									"value": "66f1a56903568c70619b12b2"
 								}
 							]
 						}
@@ -331,7 +331,7 @@
 							"variable": [
 								{
 									"key": "workItemId",
-									"value": "66e987a9c475547b1d4342b0"
+									"value": "66f1a49d03568c70619b12af"
 								}
 							]
 						}
@@ -384,7 +384,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"userName\": \"me-2\",\r\n    \"password\": \"me-2\"\r\n}",
+							"raw": "{\r\n    \"username\": \"me-1\",\r\n    \"email\": \"gmail@gmail.com\",\r\n    \"password\": \"me-1\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -423,7 +423,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"userName\": \"me-1\",\r\n    \"password\": \"me1\"\r\n}",
+							"raw": "{\r\n    \"usernameOrEmail\": \"me-1\",\r\n    \"password\": \"me-1\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -593,6 +593,74 @@
 									"key": "reactionId",
 									"value": "66ec3d6cb7038f4be61b661d"
 								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Email Verification",
+			"item": [
+				{
+					"name": "Generate otp",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/email-verification",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"email-verification"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify otp",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"otp\": 7320\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/email-verification",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"email-verification"
 							]
 						}
 					},

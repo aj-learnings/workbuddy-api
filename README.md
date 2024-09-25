@@ -65,7 +65,7 @@ Before running the project, ensure you have the following prerequisites set up:
 ## Docker image
 This code is also deployed as a docker image. Use the below command to run it as a container
 ```bash
-docker run -d -p <your-port>:9401 --name workbuddy-api ajlearnings/workbuddy-api:v1
+docker run -d -p <your-port>:9401 --name workbuddy-api ajlearnings/workbuddy-api:latest
 ```
 Check [here](https://hub.docker.com/r/ajlearnings/workbuddy-api) for the environment variables.
 

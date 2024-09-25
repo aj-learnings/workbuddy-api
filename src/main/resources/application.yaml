@@ -18,13 +18,13 @@ spring:
   cache:
     type: redis
     time-to-live:
-      general: 3600
-      otp: 120
+      general: 1800
+      otp: 180
   mail:
     host: smtp.gmail.com
     port: 587
     username: ${SENDER_EMAIL:email@email.com}
-    password: ${GOOGLE_APP_PASSWORD:password}
+    password: ${SENDER_PASSWORD:password}
     properties:
       mail:
         smtp:

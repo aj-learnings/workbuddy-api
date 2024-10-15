@@ -39,8 +39,8 @@ public class EmailVerificationService implements IEmailVerificationService {
         var otp = otpService.generateOTP(user.getEmail(), 4);
         var emailData = EmailData.builder()
                                  .to(user.getEmail())
-                                 .subject(Constants.EmailOTP.Subject)
-                                 .body(String.format(Constants.EmailOTP.Body, otp, otpValidity))
+                                 .subject(Constants.Email.OTP.Subject)
+                                 .body(String.format(Constants.Email.OTP.Body, otp, otpValidity))
                                  .build();
         return emailService.sendEmail(emailData);
     }

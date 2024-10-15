@@ -18,12 +18,12 @@ public class UserReactionConsumer {
         this.emailService = emailService;
     }
 
-    @KafkaListener(topics = "user-reaction-notification", groupId = "workbuddy-consumers")
+    @KafkaListener(topics = Constants.Kafka.Topics.UserReaction, groupId = "workbuddy-consumers")
     public void sendEmail(UserReactionDetails userReactionDetails) {
         var emailData = EmailData.builder()
                                  .to(userReactionDetails.getOwnerEmail())
-                                 .subject(Constants.UserReaction.Subject)
-                                 .body(String.format(Constants.UserReaction.Body, userReactionDetails.getReactedBy(), userReactionDetails.getIsLiked() ? "liked": "disliked"))
+                                 .subject(Constants.Email.UserReaction.Subject)
+                                 .body(String.format(Constants.Email.UserReaction.Body, userReactionDetails.getReactedBy(), userReactionDetails.getIsLiked() ? "liked": "disliked"))
                                  .build();
         emailService.sendEmail(emailData);
     }

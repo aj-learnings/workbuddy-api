@@ -11,6 +11,7 @@ ENV REDIS_PORT=6379
 ENV REDIS_PASSWORD=""
 ENV SENDER_EMAIL="email@email.com"
 ENV SENDER_PASSWORD="password"
+ENV KAFKA_URI="localhost:9092"
 
 # Run the application
 ENTRYPOINT ["java", "-jar", "workbuddy-api-0.0.1-SNAPSHOT.jar"]

@@ -14,15 +14,15 @@ Below are the steps to run these apis in a virtual-machine or local-system.
 Before running the project, ensure you have the following prerequisites set up:
 
 1. [Java](https://www.java.com/en/download/help/download_options.html)
-2. [MongoDB Server](https://www.mongodb.com/try/download/community) and [Redis](https://redis.io/docs/latest/operate/oss_and_stack/install/install-redis/)
+2. [MongoDB Server](https://www.mongodb.com/try/download/community), [Redis](https://redis.io/docs/latest/operate/oss_and_stack/install/install-redis/) and [Kafka](https://kafka.apache.org/downloads)
    
-   You can set up MongoDB and Redis in one of the following ways:
+   You can set up MongoDB, Redis and Kafka in one of the following ways:
    
-   a.  Local Installation - Download and install both MongoDB and Redis on your system.
+   a.  Local Installation - Download and install MongoDB, Redis and Kafka on your system.
 
    b. [Docker](https://www.docker.com/products/docker-desktop/)
 
-   c. Managed Db - You can opt to use cloud-based [MongoDB](https://www.mongodb.com/products/platform/atlas-database) and [Redis](https://app.redislabs.com/) services.
+   c. Managed Services - You can opt to use cloud-based [MongoDB](https://www.mongodb.com/products/platform/atlas-database), [Redis](https://app.redislabs.com/) and [Kafka](https://www.confluent.io/get-started/) services.
 
 ### Steps :
 
@@ -35,14 +35,14 @@ Before running the project, ensure you have the following prerequisites set up:
    cd workbuddy-api
    ```
    
-2. **Install mongodb and redis with docker** (This step is needed when you don't have mongo and redis in your system and neither you are using managed dbs)
+2. **Install mongodb, redis and kafka with docker** (This step is needed when you don't have mongo, redis and kafka in your system and neither you are using managed dbs)
 
    ```bash
    docker-compose up -d
    ```
    Note:
    
-   If you are not using docker, then you need to update the mongodb and redis details in the [properties](https://github.com/aj-learnings/workbuddy-api/blob/master/src/main/resources/application.yaml) file.
+   If you are not using docker, then you need to update the mongodb, redis and kafka details in the [properties](https://github.com/aj-learnings/workbuddy-api/blob/master/src/main/resources/application.yaml) file.
 
    
 3. **Run the application**

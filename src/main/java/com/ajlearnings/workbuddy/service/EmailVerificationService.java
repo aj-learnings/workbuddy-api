@@ -1,7 +1,7 @@
 package com.ajlearnings.workbuddy.service;
 
-import com.ajlearnings.workbuddy.Constants;
 import com.ajlearnings.workbuddy.exception.UserAlreadyExistException;
+import com.ajlearnings.workbuddy.helpers.EmailTemplates;
 import com.ajlearnings.workbuddy.model.EmailData;
 import com.ajlearnings.workbuddy.model.request.EmailVerificationRequest;
 import com.ajlearnings.workbuddy.store.IUserStore;
@@ -39,8 +39,8 @@ public class EmailVerificationService implements IEmailVerificationService {
         var otp = otpService.generateOTP(user.getEmail(), 4);
         var emailData = EmailData.builder()
                                  .to(user.getEmail())
-                                 .subject(Constants.Email.OTP.Subject)
-                                 .body(String.format(Constants.Email.OTP.Body, otp, otpValidity))
+                                 .subject(EmailTemplates.OTP.Subject)
+                                 .body(String.format(EmailTemplates.OTP.Body, user.getUsername(), otp, otpValidity))
                                  .build();
         return emailService.sendEmail(emailData);
     }

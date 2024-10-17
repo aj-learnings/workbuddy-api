@@ -28,7 +28,7 @@ public class EmailService implements IEmailService {
             helper.setFrom(fromEmail);
             helper.setTo(emailData.getTo());
             helper.setSubject(emailData.getSubject());
-            helper.setText(emailData.getBody());
+            helper.setText(emailData.getBody(), true);
             javaMailSender.send(message);
             return true;
         } catch(Exception ex) {

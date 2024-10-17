@@ -1,6 +1,7 @@
 package com.ajlearnings.workbuddy.service.kafka.consumers;
 
 import com.ajlearnings.workbuddy.Constants;
+import com.ajlearnings.workbuddy.helpers.EmailTemplates;
 import com.ajlearnings.workbuddy.model.EmailData;
 import com.ajlearnings.workbuddy.model.UserReactionDetails;
 import com.ajlearnings.workbuddy.service.IEmailService;
@@ -22,8 +23,12 @@ public class UserReactionConsumer {
     public void sendEmail(UserReactionDetails userReactionDetails) {
         var emailData = EmailData.builder()
                                  .to(userReactionDetails.getOwnerEmail())
-                                 .subject(Constants.Email.UserReaction.Subject)
-                                 .body(String.format(Constants.Email.UserReaction.Body, userReactionDetails.getReactedBy(), userReactionDetails.getIsLiked() ? "liked": "disliked"))
+                                 .subject(EmailTemplates.UserReaction.Subject)
+                                 .body(String.format(EmailTemplates.UserReaction.Body,
+                                                        userReactionDetails.getOwnerName(),
+                                                        userReactionDetails.getReactedBy(),
+                                                        userReactionDetails.getIsLiked() ? "liked": "disliked",
+                                                        userReactionDetails.getText()))
                                  .build();
         emailService.sendEmail(emailData);
     }

@@ -45,6 +45,8 @@ public class UserReactionService implements IUserReactionService {
         var addedUserReaction = userReactionStore.add(userReaction);
         if (!Objects.equals(addedUserReaction.getComment().getUser().getUsername(), username)) {
             var userReactionDetails = UserReactionDetails.builder()
+                                                         .text(addedUserReaction.getComment().getText())
+                                                         .ownerName(addedUserReaction.getComment().getUser().getUsername())
                                                          .ownerEmail(addedUserReaction.getComment().getUser().getEmail())
                                                          .reactedBy(addedUserReaction.getUser().getUsername())
                                                          .isLiked(addedUserReaction.getIsLiked())
@@ -67,6 +69,8 @@ public class UserReactionService implements IUserReactionService {
         var updatedUserReaction = userReactionStore.update(userReaction);
         if (!Objects.equals(updatedUserReaction.getComment().getUser().getUsername(), username)) {
             var userReactionDetails = UserReactionDetails.builder()
+                                                         .text(updatedUserReaction.getComment().getText())
+                                                         .ownerName(updatedUserReaction.getComment().getUser().getUsername())
                                                          .ownerEmail(updatedUserReaction.getComment().getUser().getEmail())
                                                          .reactedBy(updatedUserReaction.getUser().getUsername())
                                                          .isLiked(updatedUserReaction.getIsLiked())

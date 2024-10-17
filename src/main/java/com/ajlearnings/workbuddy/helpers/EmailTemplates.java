@@ -24,5 +24,27 @@ public class EmailTemplates {
             </html>
             """;
     }
+    public static class UserReaction {
+        public static String Subject = "User Reaction | Workbuddy";
+        public static String Body = """
+            <html>
+               <body style="font-family: Arial, sans-serif; color: #333;">
+                   <div style="text-align: left;">
+                       <p style="font-size: 14px; color: #555;">
+                           Hey %s !<br><br>
+                           %s has <strong>%s</strong> the below comment.
+                       </p>
+                       <div style="border: 1px solid #c5c2c2; padding: 0px 4px; border-radius: 4px;">
+                           %s
+                       </div>
+                       <p style="font-size: 12px; color: #999; margin-top: 20px;">
+                           Thanks,<br>
+                           The Workbuddy Team
+                       </p>
+                   </div>
+               </body>
+            </html>
+            """;
+    }
 
 }
